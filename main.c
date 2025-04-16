@@ -6,11 +6,12 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 15:10:36 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:33:48 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+#include "libft/libft.h"
 
 void	DummySetter(t_data *core)
 {
@@ -40,6 +41,28 @@ void	DummySetter(t_data *core)
 	core->Map[12] = "11110111 1110101 101111010001";
 	core->Map[13] = "11111111 1111111 111111111111";
 	
+}
+
+void	extracting_link(char **core)
+{
+	char *str;
+	char *temp;
+	str = NULL;
+	str = ft_strchr(*core, ' ');
+	if (str != NULL)
+		str++;
+	temp = ft_strdup(str);
+	free(*core);
+	*core = ft_strdup(temp);
+	free(temp);
+}
+
+void	AllLinkExtractor(t_data *core)
+{
+	extracting_link(&core->North);
+	extracting_link(&core->South);
+	extracting_link(&core->East);
+	extracting_link(&core->West);
 }
 
 void printer(t_data core, int count)
@@ -73,10 +96,18 @@ int main(int argc, char **argv)
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
-
+	
 	int count = GetData(argv[1], &core);
 	if (count == -1)
 		return (-1);
-	core.Map = get_map_char_len(count, argv[1], &core);
+	core.Map = get_map_char_len(count + 1, argv[1], &core);
+	AllLinkExtractor(&core);
 	printer(core, count);
+	
+	//Here to free leaks
+	//free_array(core.Map);
+	free(core.North);
+	free(core.South);
+	free(core.East);
+	free(core.West);
 }

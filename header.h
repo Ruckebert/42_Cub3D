@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 15:10:21 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:38:00 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*Buffer for get next_line*/
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20000000000
+#  define BUFFER_SIZE 10000000
 # endif
 
 //So_Long Functions but also math.h

@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:09:26 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 15:09:58 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:31:16 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,22 @@
 int	get_map_char_len_loop(char *line, char **map, int fd, t_data *vars)
 {
 	int	i;
-
-	while (line && line[0] != '1' && line[0] != '0')
+	i = 0;
+	
+	while (line[0] != '1' && line[0] != '0' && line[0] != ' ')
 	{
-		i = 0;
-		while (line[i] == ' ')
-			i++;
-		if (line[i] == '1' || line[i] == '0')
-			break ;
+		/*int j;
+		j = 0;
+		while (line[j] == ' ')
+			j++;
+		if (line[j] == '1' || line[j] == '0')
+			break ;*/
 		free(line);
 		line = get_next_line(fd, vars);
 		if (!line && vars->error == 1)
 			return (1);
 	}
-	
-	i = 0;
+
 	while (line)
 	{
 		map[i] = ft_calloc(sizeof(char), ft_strlen(line) + 1);
