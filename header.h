@@ -7,8 +7,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 20000000000
 # endif
-# define HEIGHT 600
-# define WIDTH 600
+# define HEIGHT 700
+# define WIDTH 700
 # include <math.h>
 # include <fcntl.h>
 # include <mlx.h>

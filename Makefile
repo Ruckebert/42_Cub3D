@@ -1,31 +1,37 @@
-
 NAME = Cub3D
 
+# Source and object files
 SOURCE = main.c ft_atoi.c movement.c minimap.c mlx.c get_next_line.c get_next_line_utils.c parsing.c
-
 OBJECTS = $(SOURCE:.c=.o)
 
-CFLAGS = -Werror -Wextra -g -Wall
-
+# Compiler settings
+CFLAGS = -Wall -Wextra -Werror -g
 COMP = cc
-
 RM = rm -f
 
-all: ${NAME}
+# MiniLibX path (includes both lib and header)
+MLX_PATH = mlx_linux
 
-.c.o:
-	-cc ${CFLAGS}  -I/usr/include -Imlx_linux -c $< -o ${<:.c=.o} 
+# Libft
+LIBFT = ./libft/libft.a
 
-${NAME}: ${OBJECTS}
-		${MAKE} -C ./libft --no-print-directory
-		${COMP} ${CFLAGS} ${OBJECTS} -lmlx -lXext -lX11 -lm ./libft/libft.a -o ${NAME}
+all: $(NAME)
 
-clean: 
-	${MAKE} -C ./libft --no-print-directory fclean
-	${RM} ${OBJECTS}
+# Compile .c to .o
+%.o: %.c
+	$(COMP) $(CFLAGS) -I$(MLX_PATH) -c $< -o $@
+
+# Final binary linking
+$(NAME): $(OBJECTS)
+	$(MAKE) -C ./libft --no-print-directory
+	$(COMP) $(CFLAGS) $(OBJECTS) -L$(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz $(LIBFT) -o $(NAME)
+
+clean:
+	$(MAKE) -C ./libft --no-print-directory clean
+	$(RM) $(OBJECTS)
 
 fclean: clean
-	${RM} ${NAME}
+	$(RM) $(NAME)
 
 re: fclean all
 
