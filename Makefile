@@ -1,7 +1,7 @@
 
 NAME = Cub3D
 
-SOURCE = main.c get_next_line.c get_next_line_utils.c
+SOURCE = main.c get_next_line.c get_next_line_utils.c parsing.c
 
 OBJECTS = $(SOURCE:.c=.o)
 
