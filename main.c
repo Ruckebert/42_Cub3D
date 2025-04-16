@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 11:12:41 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:03:29 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	DummySetter(t_data *core)
 	core->Bottom = 11189196;
 	
 	//Put the image file here
-	core->North = "";
-	core->South = "";
-	core->East = "";
-	core->West = "";
+	core->North = "~/Downloads/1.png";
+	core->South = "~/Downloads/2.png";
+	core->East = "~/Downloads/3.png";
+	core->West = "~/Downloads/4.png";
 	
 	core->Map = ft_calloc(sizeof(char *), 13);
 	core->Map[0] = "		1111111111111111111111111";
@@ -43,10 +43,12 @@ void	DummySetter(t_data *core)
 	
 }
 
+
 int main(int argc, char **argv)
 {
 	t_data core;
-
+	t_game game;
+	
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
 	{
@@ -54,11 +56,10 @@ int main(int argc, char **argv)
 		//write(2, "Error\n", 37);
 		return (-1);
 	}
-	if (GetData(argv[1], &core) == -1)
-		return (-1);
-	/*
-	ft_printf("North: %s\n", core.North);
-	ft_printf("South: %s\n", core.South);
-	ft_printf("East: %s\n", core.East);
-	ft_printf("West: %s\n", core.West);*/
+//	if (GetData(argv[1], &core) == -1)
+//		return (1);
+	DummySetter(&core);
+
+
+	init(&core, &game);
 }

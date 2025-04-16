@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 11:13:01 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:18:01 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <mlx.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include "stdio.h"
+# include "stdlib.h"
+# include "unistd.h"
 
 typedef struct s_data 
 {
@@ -42,6 +45,25 @@ typedef struct s_data
 	int		error;
 
 } t_data;
+
+typedef struct s_game
+{
+	int			px;
+	int			py;
+	int			pdir;
+	
+	void		*mlx_ptr;
+	void		*win_ptr;
+		
+	void		*img_N;
+	void		*img_S;
+	void		*img_W;
+	void		*img_E;
+	
+	void		*img_C;
+	void		*img_F;
+	
+} t_game;
 
 /*Parsing Functions*/
 int GetData(char *file, t_data *core);
