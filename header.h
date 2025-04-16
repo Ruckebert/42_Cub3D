@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 10:43:34 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:13:01 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ typedef struct s_data
 	int		error;
 
 } t_data;
+
+/*Parsing Functions*/
+int GetData(char *file, t_data *core);
+
 
 /*Get_Next_Line*/
 char	*get_next_line(int fd, t_data *vars);
