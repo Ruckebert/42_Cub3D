@@ -6,12 +6,11 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 11:12:41 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:10:36 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-#include "libft/libft.h"
 
 void	DummySetter(t_data *core)
 {
@@ -43,6 +42,27 @@ void	DummySetter(t_data *core)
 	
 }
 
+void printer(t_data core, int count)
+{
+	ft_printf("Count: %d\n", count);
+	ft_printf("Top: %d\n", core.Top);
+	ft_printf("Bottom: %d\n", core.Bottom);
+	ft_printf("North: %s\n", core.North);
+	ft_printf("South: %s\n", core.South);
+	ft_printf("East: %s\n", core.East);
+	ft_printf("West: %s\n", core.West);
+	if (core.Map[0][0] != '\0')
+	{
+		int i = 0;
+		while (core.Map[i])
+		{
+			ft_printf("%s", core.Map[i]);
+			i++;
+		}
+	}
+	ft_printf("\n");
+}
+
 int main(int argc, char **argv)
 {
 	t_data core;
@@ -50,15 +70,13 @@ int main(int argc, char **argv)
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
 	{
-		write(2, "Not the correct amount of arguments\n", 37);
-		//write(2, "Error\n", 37);
+		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
-	if (GetData(argv[1], &core) == -1)
+
+	int count = GetData(argv[1], &core);
+	if (count == -1)
 		return (-1);
-	/*
-	ft_printf("North: %s\n", core.North);
-	ft_printf("South: %s\n", core.South);
-	ft_printf("East: %s\n", core.East);
-	ft_printf("West: %s\n", core.West);*/
+	core.Map = get_map_char_len(count, argv[1], &core);
+	printer(core, count);
 }
