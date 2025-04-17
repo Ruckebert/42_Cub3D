@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 14:24:20 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:15:05 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int GetData(char *file, t_data *core)
 	count = 0;
 	fd = open(file, O_RDWR);
 	if (fd == -1)
-		exit(write(2, "Error\nInvalid File!\n", 21));
+		exit(write(2, "Error\nInvalid File!\n", 21)); //Change this since the exit code is 1
 	if (ft_strlen(file) < 5 || ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)	!= 0 || ft_strncmp(file + ft_strlen(file) - 5, "/.cub", 5) == 0)
 		map_error(fd, "Invalid File Type!\n");
 	line = get_next_line(fd, core);

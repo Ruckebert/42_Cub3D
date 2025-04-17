@@ -6,12 +6,13 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 16:33:48 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:45:39 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "libft/libft.h"
+#include <stdlib.h>
 
 void	DummySetter(t_data *core)
 {
@@ -43,28 +44,6 @@ void	DummySetter(t_data *core)
 	
 }
 
-void	extracting_link(char **core)
-{
-	char *str;
-	char *temp;
-	str = NULL;
-	str = ft_strchr(*core, ' ');
-	if (str != NULL)
-		str++;
-	temp = ft_strdup(str);
-	free(*core);
-	*core = ft_strdup(temp);
-	free(temp);
-}
-
-void	AllLinkExtractor(t_data *core)
-{
-	extracting_link(&core->North);
-	extracting_link(&core->South);
-	extracting_link(&core->East);
-	extracting_link(&core->West);
-}
-
 void printer(t_data core, int count)
 {
 	ft_printf("Count: %d\n", count);
@@ -86,6 +65,76 @@ void printer(t_data core, int count)
 	ft_printf("\n");
 }
 
+void map_checker_tokens(char **map, t_data *core)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '1' || map[i][j] == '0' || map[i][j] == ' '|| map[i][j] == '\n')
+				j++;
+			else if (map[i][j] == 'W' || map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E')
+			{
+				core->px = j; //Check with Martin if this is correct
+				core->py = i;
+				core->direction = map[i][j];
+				core->error++;
+				j++;
+			}
+			else
+				exit(write(1, "Error\n", 6)); //Program should exit and free and state that an invlaid map
+		}
+		i++;
+	}
+}
+
+void	validPlayerData(t_data *core)
+{
+	if (core->direction == '\0')
+		exit(write(1, "Error\n", 6));
+	if (core->error >= 2)
+		exit(write(1, "Error\n", 6));
+}
+
+void map_checker_spaces(char **map, t_data *core)
+{
+	int i;
+	int j;
+	int count;
+
+	count = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '1' || map[i][j] == '0')
+				count++;
+			j++;
+		}
+		if (count == 0)
+		{
+			free(core->North);
+			exit(write(1, "Error\nEmpty Space Line\n", 23));
+		}
+		count = 0;
+		i++;
+	}
+}
+
+void map_checker(t_data *core)
+{
+	map_checker_tokens(core->Map, core);
+	validPlayerData(core);
+	map_checker_spaces(core->Map, core);
+}
+
 int main(int argc, char **argv)
 {
 	t_data core;
@@ -102,10 +151,12 @@ int main(int argc, char **argv)
 		return (-1);
 	core.Map = get_map_char_len(count + 1, argv[1], &core);
 	AllLinkExtractor(&core);
+	map_checker(&core);
 	printer(core, count);
+
 	
 	//Here to free leaks
-	//free_array(core.Map);
+	free_array(core.Map);
 	free(core.North);
 	free(core.South);
 	free(core.East);
