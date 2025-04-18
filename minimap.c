@@ -86,6 +86,29 @@ void draw_grid(t_game *game)
     }
 }
 
+void draw_rays(t_game *game)
+{
+    double start_angle = game->angle - (FOV / 2);
+    double angle_step = FOV / NUM_RAYS;
+    int i;
+
+    double tile = game->m_sq_size;
+    int px = (int)(game->px * tile + tile / 2);
+    int py = (int)(game->py * tile + tile / 2);
+
+    for (i = 0; i < NUM_RAYS; i++)
+    {
+        double ray_angle = start_angle + i * angle_step;
+        double ray_dx = cos(ray_angle) * RAY_LENGTH;
+        double ray_dy = sin(ray_angle) * RAY_LENGTH;
+
+        int end_x = px + (int)ray_dx;
+        int end_y = py + (int)ray_dy;
+
+        draw_line(game, px, py, end_x, end_y, 0x00FF00);  // Green rays
+    }
+}
+
 void draw_player(t_game *game)
 {
     int tile = game->m_sq_size;
@@ -107,8 +130,8 @@ void draw_player(t_game *game)
     int arrow_end_y = cy + (int)(game->dir_y * arrow_length);
 
     draw_line(game, cx, cy, arrow_end_x, arrow_end_y, 0x0000FF);
+    draw_rays(game);
 }
-
 
 int minimap(t_game *game)
 {

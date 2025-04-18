@@ -35,6 +35,17 @@ void eval_keycode(int keycode, t_game *game, double *dx, double *dy)
     }
 }
 
+void rotate_player(t_game *game, double delta)
+{
+    game->angle += delta;
+    // wrap it to [0, 2π)
+    if (game->angle < 0)            game->angle += 2 * M_PI;
+    else if (game->angle >= 2*M_PI) game->angle -= 2 * M_PI;
+
+    game->dir_x = cos(game->angle);
+    game->dir_y = sin(game->angle);
+}
+
 void playermove(int keycode, t_game *game)
 {
     double dx = 0, dy = 0;
@@ -56,8 +67,20 @@ void render(t_game *game)
 int on_key_press(int keycode, void *param)
 {
     t_game *game = (t_game *)param;
+
     if (keycode == XK_Escape)
         on_destroy(game);
+
+    else if (keycode == XK_Left)
+    {
+        rotate_player(game, -ROT_SPEED);
+        render(game);
+    }
+    else if (keycode == XK_Right)
+    {
+        rotate_player(game, +ROT_SPEED);
+        render(game);
+    }
     else if (keycode == XK_w || keycode == XK_s
           || keycode == XK_a || keycode == XK_d)
     {

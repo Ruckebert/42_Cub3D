@@ -2,26 +2,16 @@
 
 void init_dir(t_data *core, t_game *game)
 {
-    if (core->dir == 'S')
-    {
-        game->dir_x = 0;
-        game->dir_y = 1;
-    }
-    else if (core->dir == 'E')
-    {
-        game->dir_x = 1;
-        game->dir_y = 0;
-    }
-    else if (core->dir == 'N')
-    {
-        game->dir_x = 0;
-        game->dir_y = -1;
-    }
+    if (core->dir == 'E')
+        game->angle = 0.0;
+    else if (core->dir == 'S')
+        game->angle = M_PI/2;
     else if (core->dir == 'W')
-    {
-        game->dir_x = -1;
-        game->dir_y = 0;
-    }
+        game->angle = M_PI;
+    else if (core->dir == 'N')
+        game->angle = 3 * M_PI/2;
+    game->dir_x = cos(game->angle);
+    game->dir_y = sin(game->angle);
 }
 
 int init(t_data *core, t_game *game)

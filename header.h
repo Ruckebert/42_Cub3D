@@ -7,8 +7,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 20000000000
 # endif
+# define ROT_SPEED (M_PI/16)
 # define HEIGHT 700
 # define WIDTH 700
+#define NUM_RAYS 60
+#define FOV (M_PI / 3)  // 60 degrees
+#define RAY_LENGTH 100
 # include <math.h>
 # include <fcntl.h>
 # include <mlx.h>
@@ -44,7 +48,8 @@ typedef struct s_game
     double      py;
     double      dir_x;
     double      dir_y;
-    
+    double      angle;
+
     int         m_sq_size;
     int         pdir;
     
