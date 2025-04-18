@@ -58,10 +58,28 @@ void playermove(int keycode, t_game *game)
 
 void render(t_game *game)
 {
+    // 1) clear dynamic (3D) buffer to black
+    for (int y = 0; y < game->win_y; y++)
+        for (int x = 0; x < game->win_x; x++)
+            my_mlx_pixel_put_3d(game, x, y, 0x000000);
+
+    // 2) draw the 3D projection into dynamic_img
+    render_3d_projection(game);
+
+    // 3) draw your 2D minimap overlay
     draw_minimap(game);
     draw_grid(game);
     draw_player(game);
-    mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->minimap_img, 0, 0);
+
+    // 4) push both images: 3D first, then on top your minimap
+    mlx_put_image_to_window(
+        game->mlx_ptr, game->win_ptr,
+        game->dynamic_img,  0, 0
+    );
+/*    mlx_put_image_to_window(
+        game->mlx_ptr, game->win_ptr,
+        game->minimap_img,  0, 0
+    );*/
 }
 
 int on_key_press(int keycode, void *param)

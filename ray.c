@@ -1,0 +1,161 @@
+#include "header.h"
+
+t_ray init_ray_values(double ray_angle)
+{
+    t_ray ray;
+    ray.dir_x = cos(ray_angle);
+    ray.dir_y = sin(ray_angle);
+    ray.delta_x = fabs(1 / ray.dir_x);
+    ray.delta_y = fabs(1 / ray.dir_y);
+    return ray;
+}
+
+t_dda init_step_and_sidedist(t_ray ray, double px, double py)
+{
+    t_dda dda;
+    dda.map_x = (int)px;
+    dda.map_y = (int)py;
+
+    if (ray.dir_x < 0)
+    {
+        dda.step_x = -1;
+        dda.side_x = (px - dda.map_x) * ray.delta_x;
+    }
+    else
+    {
+        dda.step_x = 1;
+        dda.side_x = (dda.map_x + 1.0 - px) * ray.delta_x;
+    }
+
+    if (ray.dir_y < 0)
+    {
+        dda.step_y = -1;
+        dda.side_y = (py - dda.map_y) * ray.delta_y;
+    }
+    else
+    {
+        dda.step_y = 1;
+        dda.side_y = (dda.map_y + 1.0 - py) * ray.delta_y;
+    }
+
+    return dda;
+}
+
+static int row_width(char **map, int y)
+{
+    return ft_strlen(map[y]);
+}
+
+static int map_height(char **map)
+{
+    int h = 0;
+    while (map[h])
+        h++;
+    return h;
+}
+
+void perform_dda(t_game *game, t_ray ray, t_dda *dda)
+{
+    int hit = 0;
+    int depth = MAX_DEPTH;
+    int H = map_height(game->core->Map);
+
+    while (!hit && depth--)
+    {
+        if (dda->side_x < dda->side_y)
+        {
+            dda->side_x += ray.delta_x;
+            dda->map_x += dda->step_x;
+            dda->side   = 0;
+        }
+        else
+        {
+            dda->side_y += ray.delta_y;
+            dda->map_y += dda->step_y;
+            dda->side   = 1;
+        }
+
+        // dynamic bounds check:
+        if (dda->map_y < 0 || dda->map_y >= H)
+            break;
+        int W = row_width(game->core->Map, dda->map_y);
+        if (dda->map_x < 0 || dda->map_x >= W)
+            break;
+
+        if (game->core->Map[dda->map_y][dda->map_x] == '1')
+            hit = 1;
+    }
+
+    // compute perp_dist exactly as before…
+    if (dda->side == 0)
+        dda->perp_dist = dda->side_x - ray.delta_x;
+    else
+        dda->perp_dist = dda->side_y - ray.delta_y;
+}
+
+
+void get_ray_hit_point(t_game *game, t_ray ray, t_dda dda,
+    int *out_x, int *out_y)
+{
+    double hx = game->px + ray.dir_x * dda.perp_dist;
+    double hy = game->py + ray.dir_y * dda.perp_dist;
+
+    int tile = game->m_sq_size;
+    *out_x = (int)(hx * tile);
+    *out_y = (int)(hy * tile);
+}
+
+void cast_ray_dda(t_game *game, double ray_angle)
+{
+    t_ray ray = init_ray_values(ray_angle);
+    t_dda dda = init_step_and_sidedist(ray, game->px, game->py);
+
+    perform_dda(game, ray, &dda);
+
+    int px = (int)(game->px * game->m_sq_size + game->m_sq_size/2);
+    int py = (int)(game->py * game->m_sq_size + game->m_sq_size/2);
+
+    int ex, ey;
+    get_ray_hit_point(game, ray, dda, &ex, &ey);
+
+    draw_line(game, px, py, ex, ey, 0x00FF00);
+}
+
+void my_mlx_pixel_put_3d(t_game *game, int x, int y, int color)
+{
+    char *dst;
+
+    if (x < 0 || x >= game->win_x || y < 0 || y >= game->win_y)
+        return;
+    dst = game->dynamic_data
+        + (y * game->line_len + x * (game->bpp / 8));
+    *(unsigned int*)dst = color;
+}
+
+void render_3d_projection(t_game *game)
+{
+    int screen_w = game->win_x;
+    int screen_h = game->win_y;
+    double proj_plane_dist = (screen_w / 2.0) / tan(FOV / 2.0);
+    double start_angle = game->angle - (FOV / 2.0);
+    double angle_step  = FOV / (double)screen_w;
+
+    for (int col = 0; col < screen_w; col++)
+    {
+        double ray_ang = start_angle + col * angle_step;
+        t_ray ray = init_ray_values(ray_ang);
+        t_dda dda = init_step_and_sidedist(ray, game->px, game->py);
+        perform_dda(game, ray, &dda);
+
+        double perp_dist = dda.perp_dist;
+        int slice_h = (int)((1.0 * proj_plane_dist) / perp_dist);
+
+        int draw_start = (screen_h / 2) - (slice_h / 2);
+        int draw_end   = draw_start + slice_h;
+        if (draw_start < 0)         draw_start = 0;
+        if (draw_end   >= screen_h) draw_end   = screen_h - 1;
+
+        for (int y = draw_start; y <= draw_end; y++)
+            my_mlx_pixel_put_3d(game, col, y, 0x888888);
+    }
+}
