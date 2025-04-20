@@ -121,41 +121,41 @@ void cast_ray_dda(t_game *game, double ray_angle)
     draw_line(game, px, py, ex, ey, 0x00FF00);
 }
 
-void my_mlx_pixel_put_3d(t_game *game, int x, int y, int color)
-{
-    char *dst;
-
-    if (x < 0 || x >= game->win_x || y < 0 || y >= game->win_y)
-        return;
-    dst = game->dynamic_data
-        + (y * game->line_len + x * (game->bpp / 8));
-    *(unsigned int*)dst = color;
-}
-
 void render_3d_projection(t_game *game)
 {
     int screen_w = game->win_x;
     int screen_h = game->win_y;
+
     double proj_plane_dist = (screen_w / 2.0) / tan(FOV / 2.0);
     double start_angle = game->angle - (FOV / 2.0);
-    double angle_step  = FOV / (double)screen_w;
+    double angle_step = FOV / (double)screen_w;
+    
 
+    int ceiling_color = game->core->Top;
+    int floor_color = game->core->Bottom;
+    
     for (int col = 0; col < screen_w; col++)
     {
         double ray_ang = start_angle + col * angle_step;
         t_ray ray = init_ray_values(ray_ang);
         t_dda dda = init_step_and_sidedist(ray, game->px, game->py);
         perform_dda(game, ray, &dda);
-
         double perp_dist = dda.perp_dist;
-        int slice_h = (int)((1.0 * proj_plane_dist) / perp_dist);
-
+        int slice_h = (int)(proj_plane_dist / perp_dist);
         int draw_start = (screen_h / 2) - (slice_h / 2);
-        int draw_end   = draw_start + slice_h;
-        if (draw_start < 0)         draw_start = 0;
-        if (draw_end   >= screen_h) draw_end   = screen_h - 1;
-
+        int draw_end = draw_start + slice_h;
+        
+        if (draw_start < 0) draw_start = 0;
+        if (draw_end >= screen_h) draw_end = screen_h - 1;
+        
+        for (int y = 0; y < draw_start; y++)
+            my_mlx_pixel_put(game, col, y, ceiling_color);
+        
         for (int y = draw_start; y <= draw_end; y++)
-            my_mlx_pixel_put_3d(game, col, y, 0x888888);
+            my_mlx_pixel_put(game, col, y, 0x888888);
+        
+        for (int y = draw_end + 1; y < screen_h; y++)
+            my_mlx_pixel_put(game, col, y, floor_color);
     }
 }
+

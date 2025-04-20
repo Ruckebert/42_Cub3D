@@ -42,6 +42,17 @@ typedef struct s_data
     char    dir;
 } t_data;
 
+typedef struct s_texture
+{
+    void *img;
+    char *data;
+    int width;
+    int height;
+    int bpp;
+    int line_len;
+    int endian;
+} t_texture;
+
 typedef struct s_game
 {
     t_data      *core;
@@ -67,11 +78,20 @@ typedef struct s_game
     void        *img_C;
     void        *img_F;
     
-    void        *minimap_img;
-    void        *dynamic_img;
-    char        *minimap_data;
-    char        *dynamic_data;
+    void        *img;
+    char        *img_data;
     int         bpp, line_len, endian;
+
+    /* minimap geometry, in pixels */
+    int         mini_w;
+    int         mini_h;
+    int         mini_off_x;
+    int         mini_off_y;
+
+    t_texture tex_north;
+    t_texture tex_south;
+    t_texture tex_east;
+    t_texture tex_west;
 } t_game;
 
 typedef struct s_ray {
@@ -99,15 +119,16 @@ char    *ft_strdup1(const char *src);
 
 /* Gameloop-Minimap */
 int init(t_data *core, t_game *game);
-int minimap(t_game *game);
+void render(t_game *game);
 void draw_player(t_game *game);
 void draw_minimap(t_game *game);
 void draw_grid(t_game *game);
 void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color);
 void cast_ray_dda(t_game *game, double ray_angle);
 void render_3d_projection(t_game *game);
-void my_mlx_pixel_put_3d(t_game *game, int x, int y, int color);
 int map_height(char **map);
+int on_destroy(t_game *game);
+void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
 
 /* Movement */
 void move(t_data *core, t_game *game);

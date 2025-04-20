@@ -1,44 +1,24 @@
 #include "header.h"
 
-int on_destroy(t_game *game)
+int is_wall(t_game *game, double x, double y)
 {
-    mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-    mlx_destroy_display(game->mlx_ptr);
-    free(game->mlx_ptr);
-    exit(0);
-    return (0);
-}
-
-void eval_keycode(int keycode, t_game *game, double *dx, double *dy)
-{
-    *dx = 0;
-    *dy = 0;
-    if (keycode == XK_w)
-    {
-        *dx = game->dir_x;
-        *dy = game->dir_y;
-    }
-    else if (keycode == XK_s)
-    {
-        *dx = -game->dir_x;
-        *dy = -game->dir_y;
-    }
-    else if (keycode == XK_d)
-    {
-        *dx = -game->dir_y;
-        *dy = game->dir_x;
-    }
-    else if (keycode == XK_a)
-    {
-        *dx = game->dir_y;
-        *dy = -game->dir_x;
-    }
+    int map_x = (int)floor(x);
+    int map_y = (int)floor(y);
+    
+    int height = map_height(game->core->Map);
+    if (map_y < 0 || map_y >= height)
+        return 1;
+    
+    int width = ft_strlen(game->core->Map[map_y]);
+    if (map_x < 0 || map_x >= width)
+        return 1;
+    
+    return (game->core->Map[map_y][map_x] == '1');
 }
 
 void rotate_player(t_game *game, double delta)
 {
     game->angle += delta;
-    // wrap it to [0, 2π)
     if (game->angle < 0)            game->angle += 2 * M_PI;
     else if (game->angle >= 2*M_PI) game->angle -= 2 * M_PI;
 
@@ -50,60 +30,52 @@ void playermove(int keycode, t_game *game)
 {
     double dx = 0, dy = 0;
     double move_speed = 0.1;
-
+    double collision_margin = 0.2;
+    
     eval_keycode(keycode, game, &dx, &dy);
-    game->px += dx * move_speed;
-    game->py += dy * move_speed;
+    
+    double new_x = game->px + dx * move_speed;
+    double new_y = game->py + dy * move_speed;
+    
+    if (!is_wall(game, new_x + (dx * collision_margin), game->py))
+        game->px = new_x;
+    
+    if (!is_wall(game, game->px, new_y + (dy * collision_margin)))
+        game->py = new_y;
 }
 
 void render(t_game *game)
 {
-    // 1) clear dynamic (3D) buffer to black
-    for (int y = 0; y < game->win_y; y++)
-        for (int x = 0; x < game->win_x; x++)
-            my_mlx_pixel_put_3d(game, x, y, 0x000000);
-
-    // 2) draw the 3D projection into dynamic_img
+    ft_bzero(game->img_data, game->win_x * game->win_y * (game->bpp / 8));
+    
     render_3d_projection(game);
 
-    // 3) draw your 2D minimap overlay
     draw_minimap(game);
     draw_grid(game);
     draw_player(game);
 
-    // 4) push both images: 3D first, then on top your minimap
     mlx_put_image_to_window(
-        game->mlx_ptr, game->win_ptr,
-        game->dynamic_img,  0, 0
+        game->mlx_ptr,
+        game->win_ptr,
+        game->img,
+        0, 0
     );
-/*    mlx_put_image_to_window(
-        game->mlx_ptr, game->win_ptr,
-        game->minimap_img,  0, 0
-    );*/
 }
+
 
 int on_key_press(int keycode, void *param)
 {
     t_game *game = (t_game *)param;
-
+    
     if (keycode == XK_Escape)
         on_destroy(game);
-
     else if (keycode == XK_Left)
-    {
         rotate_player(game, -ROT_SPEED);
-        render(game);
-    }
     else if (keycode == XK_Right)
-    {
         rotate_player(game, +ROT_SPEED);
-        render(game);
-    }
     else if (keycode == XK_w || keycode == XK_s
-          || keycode == XK_a || keycode == XK_d)
-    {
+             || keycode == XK_a || keycode == XK_d)
         playermove(keycode, game);
-        render(game);
-    }
     return (0);
 }
+

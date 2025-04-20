@@ -2,43 +2,36 @@
 
 void my_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
-    char *dst;
-
     if (x < 0 || x >= game->win_x || y < 0 || y >= game->win_y)
         return;
-    dst = game->minimap_data + (y * game->line_len + x * (game->bpp / 8));
+    char *dst = game->img_data
+        + (y * game->line_len + x * (game->bpp / 8));
     *(unsigned int*)dst = color;
 }
 
 void draw_minimap(t_game *game)
 {
-    int i, j, k, l;
-    int x, y;
-    int color;
+    int tile = game->m_sq_size;
+    int rows = map_height(game->core->Map);
 
-    for (i = 0; i < game->win_y; i++)
-        for (j = 0; j < game->win_x; j++)
-            my_mlx_pixel_put(game, j, i, 0x000000);
-
-
-    for (i = 0; i < map_height(game->core->Map); i++)
+    for (int i = 0; i < rows; i++)
     {
-        for (j = 0; game->core->Map[i][j] != '\0'; j++)
+        int cols = ft_strlen(game->core->Map[i]);
+        for (int j = 0; j < cols; j++)
         {
-            if (game->core->Map[i][j] == '1')
-                color = 0xFFFFFF;
-            else
-                color = 0x888888;
-            x = j * game->m_sq_size;
-            y = i * game->m_sq_size;
-            for (k = 0; k < game->m_sq_size; k++)
-            {
-                for (l = 0; l < game->m_sq_size; l++)
-                    my_mlx_pixel_put(game, x + l, y + k, color);
-            }
+            int color = (game->core->Map[i][j] == '1') ? 0xFFFFFF : 0x888888;
+            int base_x = game->mini_off_x + j * tile;
+            int base_y = game->mini_off_y + i * tile;
+            for (int yy = 0; yy < tile; yy++)
+                for (int xx = 0; xx < tile; xx++)
+                    my_mlx_pixel_put(game,
+                                     base_x + xx,
+                                     base_y + yy,
+                                     color);
         }
     }
 }
+
 
 void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {
@@ -65,26 +58,33 @@ void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 
 void draw_grid(t_game *game)
 {
-    int rows = 14;
-    int cols;
-    int tile = game->m_sq_size;
-    int i;
+    int tile    = game->m_sq_size;
+    int off_x   = game->mini_off_x;
+    int off_y   = game->mini_off_y;
+    int cols    = game->mini_w / tile;   // how many vertical lines
+    int rows    = game->mini_h / tile;   // how many horizontal lines
 
-    cols = 0;
-    while (game->core->Map[0][cols] != '\0')
-        cols++;
-
-    for (i = 0; i <= cols; i++)
+    // vertical grid lines
+    for (int i = 0; i <= cols; i++)
     {
-        int x = i * tile;
-        draw_line(game, x, 0, x, game->win_y, 0x222222);
+        int x = off_x + i * tile;
+        draw_line(game,
+                  x,             off_y,
+                  x,             off_y + rows * tile,
+                  0x222222);
     }
-    for (i = 0; i <= rows; i++)
+
+    // horizontal grid lines
+    for (int j = 0; j <= rows; j++)
     {
-        int y = i * tile;
-        draw_line(game, 0, y, game->win_x, y, 0x222222);
+        int y = off_y + j * tile;
+        draw_line(game,
+                  off_x,         y,
+                  off_x + cols * tile, y,
+                  0x222222);
     }
 }
+
 
 void draw_rays(t_game *game)
 {
@@ -128,6 +128,6 @@ int minimap(t_game *game)
     draw_minimap(game);
     draw_grid(game);
     draw_player(game);
-    mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->minimap_img, 0, 0);
+    mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
     return (0);
 }
