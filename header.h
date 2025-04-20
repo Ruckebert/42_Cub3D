@@ -8,8 +8,8 @@
 #  define BUFFER_SIZE 20000000000
 # endif
 # define ROT_SPEED (M_PI/16)
-# define HEIGHT 1000
-# define WIDTH 2000
+# define HEIGHT 900
+# define WIDTH 1800
 #define NUM_RAYS 60
 #define FOV (M_PI / 3)  // 60 degrees
 #define RAY_LENGTH 100
@@ -107,6 +107,8 @@ void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color);
 void cast_ray_dda(t_game *game, double ray_angle);
 void render_3d_projection(t_game *game);
 void my_mlx_pixel_put_3d(t_game *game, int x, int y, int color);
+int map_height(char **map);
+
 /* Movement */
 void move(t_data *core, t_game *game);
 int on_key_press(int keycode, void *data);

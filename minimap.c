@@ -21,7 +21,7 @@ void draw_minimap(t_game *game)
             my_mlx_pixel_put(game, j, i, 0x000000);
 
 
-    for (i = 0; i < 14; i++)
+    for (i = 0; i < map_height(game->core->Map); i++)
     {
         for (j = 0; game->core->Map[i][j] != '\0'; j++)
         {
@@ -104,8 +104,8 @@ void draw_player(t_game *game)
     int tile = game->m_sq_size;
     int margin = tile / 4;
     int player_size = tile - (2 * margin);
-    int x = (int)(game->px * tile);
-    int y = (int)(game->py * tile);
+    int x = (int)floor((game->px * tile));
+    int y = (int)floor((game->py * tile));
     int i, j;
 
 	for (i = 0; i < player_size; i++)

@@ -46,7 +46,7 @@ static int row_width(char **map, int y)
     return ft_strlen(map[y]);
 }
 
-static int map_height(char **map)
+int map_height(char **map)
 {
     int h = 0;
     while (map[h])

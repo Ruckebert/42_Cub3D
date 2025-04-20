@@ -21,7 +21,7 @@ int init(t_data *core, t_game *game)
     if (!game->mlx_ptr)
         return (1);
     init_dir(core, game);
-    game->m_sq_size = 20;
+    game->m_sq_size = 7;
     game->win_x = WIDTH;
     game->win_y = HEIGHT;
     game->win_ptr = mlx_new_window(game->mlx_ptr,
