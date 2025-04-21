@@ -1,7 +1,7 @@
 NAME = Cub3D
 
 # Source and object files
-SOURCE = main.c ray.c 3D.c ft_atoi.c movement.c minimap.c mlx.c get_next_line.c get_next_line_utils.c parsing.c
+SOURCE = main.c ray.c 3D.c door_wall.c ft_atoi.c movement.c minimap.c mlx.c get_next_line.c get_next_line_utils.c parsing.c
 OBJECTS = $(SOURCE:.c=.o)
 
 # Compiler settings

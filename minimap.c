@@ -13,25 +13,35 @@ void draw_minimap(t_game *game)
 {
     int tile = game->m_sq_size;
     int rows = map_height(game->core->Map);
-
     for (int i = 0; i < rows; i++)
     {
         int cols = ft_strlen(game->core->Map[i]);
         for (int j = 0; j < cols; j++)
         {
-            int color = (game->core->Map[i][j] == '1') ? 0xFFFFFF : 0x888888;
+            int color;
+            char map_tile = game->core->Map[i][j];
+            
+            // Set color based on tile type
+            if (map_tile == '1')
+                color = 0xFFFFFF;      // White for walls
+            else if (map_tile == '2')
+                color = 0xFF0000;      // Red for closed doors
+            else if (map_tile == '3')
+                color = 0x00FF00;      // Green for open doors
+            else
+                color = 0x888888;      // Gray for empty space
+                
             int base_x = game->mini_off_x + j * tile;
             int base_y = game->mini_off_y + i * tile;
             for (int yy = 0; yy < tile; yy++)
                 for (int xx = 0; xx < tile; xx++)
                     my_mlx_pixel_put(game,
-                                     base_x + xx,
-                                     base_y + yy,
-                                     color);
+                        base_x + xx,
+                        base_y + yy,
+                        color);
         }
     }
 }
-
 
 void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {

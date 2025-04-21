@@ -130,6 +130,9 @@ int map_height(char **map);
 int on_destroy(t_game *game);
 void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
 
+/*Wall,Door*/
+int is_wall(t_game *game, double x, double y);
+void update_doors(t_game *game);
 /* Movement */
 void move(t_data *core, t_game *game);
 int on_key_press(int keycode, void *data);
