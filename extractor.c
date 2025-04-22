@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/17 11:08:17 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:30:15 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	valid_file_checker(char *str, t_data *core)
 
 void	AllLinkExtractor(t_data *core)
 {
+	if (!core->North || !core->East || !core->South || !core->West)
+	{
+		write(2, "Error\nEmpty Textures!\n", 23);
+		exit(2);
+	}
 	extracting_link(&core->North);
 	core->North[ft_strlen(core->North) - 1] = '\0';
 	valid_file_checker(core->North, core);

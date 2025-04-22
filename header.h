@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/17 11:15:21 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:53:10 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_data
 int		GetData(char *file, t_data *core);
 char	**get_map_char_len(int map_size, char *str, t_data *vars);
 void	AllLinkExtractor(t_data *core);
+void	map_checker(t_data *core);
 
 /*Get_Next_Line*/
 char	*get_next_line(int fd, t_data *vars);
