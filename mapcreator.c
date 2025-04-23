@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:09:26 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/17 11:49:55 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:00:20 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_map_char_len_loop(char *line, char **map, int fd, t_data *vars)
 		{
 			while (--i >= 0)
 				free(map[i]);
-			return (free(map), free(line), get_next_line(-1, NULL), 0);
+			return (free(map), free(line), get_next_line(-1, NULL), 1);
 		}
 		ft_strcpy(map[i], line);
 		i++;
@@ -59,14 +59,14 @@ char	**get_map_char_len(int map_size, char *str, t_data *vars)
 	if (fd == -1)
 	{
 		free(map);
-		//We might need to use a different function since it does not free the char strings i.e. north south west east
-		map_error(fd, "File Error!\n");
+		error_exit(vars, "Error\nOpen Error\n");
 	}
 	line = get_next_line(fd, vars);
-	if (!line) //Different error handling but we will keep it for now.
-		return (free(map), close(fd), NULL);
+	if (!line)
+		return (free(map), close(fd), error_exit(vars, "Error\nGet Next Line Error\n"),  NULL);
 	if (get_map_char_len_loop(line, map, fd, vars) == 1)
 	{
+		//Might also have to change this but we need to check
 		map_error(fd, "Map Invalid\n");
 	}
 	close(fd);

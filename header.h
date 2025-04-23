@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/22 12:53:10 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:53:53 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ char	*ft_strdup1(const char *src);
 void	free_array(char **example);
 char	*ft_strcpy(char *dest, char *src);
 void	map_error(int fd, char *str);
+void	error_exit(t_data *core, const char *msg);
 
 #endif

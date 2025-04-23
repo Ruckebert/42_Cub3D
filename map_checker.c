@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:51:53 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 12:07:41 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:42:28 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void map_checker_tokens(char **map, t_data *core)
 				j++;
 			}
 			else
-				exit(write(1, "Error\n", 6)); //Program should exit and free and state that an invlaid map
+				error_exit(core, "Error\nInvalid Map!\n");
 		}
 		i++;
 	}
@@ -44,9 +44,9 @@ void map_checker_tokens(char **map, t_data *core)
 void	validPlayerData(t_data *core)
 {
 	if (core->direction == '\0')
-		exit(write(1, "Error\n", 6));
+		error_exit(core, "Error\nInvalid Player Direction!\n");
 	if (core->error >= 2)
-		exit(write(1, "Error\n", 6));
+		error_exit(core, "Error\n");
 }
 
 void map_checker_spaces(char **map, t_data *core)
@@ -67,10 +67,7 @@ void map_checker_spaces(char **map, t_data *core)
 			j++;
 		}
 		if (count == 0)
-		{
-			free(core->North);
-			exit(write(1, "Error\nEmpty Space Line\n", 23));
-		}
+			error_exit(core, "Error\nEmpty Space Line\n");
 		count = 0;
 		i++;
 	}
@@ -100,14 +97,7 @@ int is_out_of_bounds(char **map, int i, int j)
 	 	return (0);
 }
 
-void error_exit(const char *msg) 
-{
-	//Error Handling
-    fprintf(stderr, "Map error: %s\n", msg);
-    exit(1);
-}
-
-void check_surroundings(char **map, int i, int j) 
+void check_surroundings(t_data *core, char **map, int i, int j) 
 {
     int dir[4][2];
 	
@@ -131,17 +121,17 @@ void check_surroundings(char **map, int i, int j)
         int nj = j + dir[d][1];
 
         if (is_out_of_bounds(map, ni, nj))
-            error_exit("walkable tile touches edge of map");
+            error_exit(core, "Error\nWalkable tile touches space\n");
         
         char neighbor = map[ni][nj];
 
         if (is_space(neighbor))
-            error_exit("walkable tile touches space");
+            error_exit(core, "Error\nWalkable tile touches space\n");
 		d++;
     }
 }
 
-void map_checker_borders(char **map) 
+void map_checker_borders(char **map, t_data *core) 
 {
 	int i = 0;
 	int j = 0;
@@ -151,7 +141,7 @@ void map_checker_borders(char **map)
         while (map[i][j]) 
 		{
             if (is_walkable(map[i][j])) 
-                check_surroundings(map, i, j);
+                check_surroundings(core, map, i, j);
 			j++;
         }
 		i++;
@@ -172,10 +162,7 @@ void map_checker_TopBottom(char **map, t_data *core)
 			while (map[i][j])
 			{
 				if (map[i][j] == '0')
-				{
-					free(core->North);
-					exit(write(1, "Error\nTop and Bottom are Open!\n", 32));
-				}
+					error_exit(core, "Error\nTop and Bottom are Open!\n");
 				j++;
 			}
 		}
@@ -191,6 +178,6 @@ void map_checker(t_data *core)
 	validPlayerData(core);
 	map_checker_spaces(core->Map, core);
 	map_checker_TopBottom(core->Map, core);
-	map_checker_borders(core->Map);
+	map_checker_borders(core->Map, core);
 	//Check if the map is closed
 }
