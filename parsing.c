@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 11:12:32 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:32:40 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int GetData(char *file, t_data *core)
 		file_empty(fd);
 	while (line)
 	{
-		//Copies North
 		if (ft_strncmp(line, "NO", 2) == 0)
 			core->North = ft_strdup(line);
 		if (ft_strncmp(line, "SO", 2) == 0)

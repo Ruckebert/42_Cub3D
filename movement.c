@@ -16,6 +16,7 @@ int is_wall(t_game *game, double x, double y)
     return (game->core->Map[map_y][map_x] == '1');
 }
 */
+
 void rotate_player(t_game *game, double delta)
 {
     game->angle += delta;
@@ -36,11 +37,11 @@ void playermove(int keycode, t_game *game)
     double new_x = game->px + dx * move_speed;
     double new_y = game->py + dy * move_speed;
     
-    // Debug print to see what position we're checking
+
     printf("Checking position: (%f, %f) -> (%f, %f)\n", 
            game->px, game->py, new_x, new_y);
     
-    // Check the actual map tile at destination
+
     int map_x = (int)floor(new_x);
     int map_y = (int)floor(new_y);
     
@@ -50,15 +51,12 @@ void playermove(int keycode, t_game *game)
         
         char tile = game->core->Map[map_y][map_x];
         printf("Tile at destination: '%c'\n", tile);
-        
-        // If this is a closed door, try to open it
         if (tile == '2') {
             printf("Attempting to open door at (%d, %d)\n", map_x, map_y);
             game->core->Map[map_y][map_x] = '3';
         }
     }
     
-    // Allow movement through open doors ('3')
     if (!is_wall(game, new_x, game->py) || 
         (map_y >= 0 && map_y < map_height(game->core->Map) &&
          game->core->Map[map_y] != NULL && map_x >= 0 && 

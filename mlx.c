@@ -64,14 +64,13 @@ int init(t_data *core, t_game *game)
 		return (1);
 	game->img = mlx_new_image(game->mlx_ptr, game->win_x, game->win_y);
 	game->img_data = mlx_get_data_addr(game->img, &game->bpp, &game->line_len, &game->endian);
-			/* figure out minimap pixel size & offset */
 	int rows = map_height(core->Map);
 	int cols = 0;
 	while (core->Map[0][cols])
 		cols++;
 	game->mini_w    = cols * game->m_sq_size;
 	game->mini_h    = rows * game->m_sq_size;
-	game->mini_off_x = 0;            /* top‐left corner */
+	game->mini_off_x = 0;
 	game->mini_off_y = 0;
 	return (0);
 }
