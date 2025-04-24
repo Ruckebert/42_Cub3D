@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:17:58 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 09:52:27 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:58:45 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_array(char **example)
 		}
 		free(example);
 	}
+	
 }
 
 char	*ft_strcpy(char *dest, char *src)

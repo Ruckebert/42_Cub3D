@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 10:55:08 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:29:46 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	extracting_link(char **core)
 
 void	valid_file_checker(char *str, t_data *core)
 {
-	int fd;
-	fd = 0;
+	int	fd;
 
+	fd = 0;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 		error_exit(core, "Error\nInvalid Texture Files!\n");

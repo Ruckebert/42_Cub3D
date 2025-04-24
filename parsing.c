@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 11:10:12 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:33:37 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	rgbcreator(int *type, char *line)
 	if (line[i] != ',') 
 		return (1);
 	i++;
+	if (line[i] == '\n' || line[i] == '\0')
+		return (1);
 	int blue = atoi(&line[i]);
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
@@ -110,7 +112,7 @@ int GetData(char *file, t_data *core)
 	if (fd == -1)
 		return (-1);
 	if (ft_strlen(file) < 5 || ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)	!= 0 || ft_strncmp(file + ft_strlen(file) - 5, "/.cub", 5) == 0)
-		map_error(fd, "Invalid File Type!\n");
+		map_error(fd, "Invalid File Type!\n"); //This can be outside the function if it has to be
 	line = get_next_line(fd, core);
 	if (!line)
 		map_error(fd, "Empty File!\n");
@@ -126,5 +128,7 @@ int GetData(char *file, t_data *core)
 		if (!line && core->error == 1)
 			return (free(line), close(fd), -1);
 	}
+	if (count == 4) //This can be somehwere also
+		return (-1);
 	return (close(fd), (count - 4));
 }

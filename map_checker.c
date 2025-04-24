@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:51:53 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 11:09:23 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:23:35 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,6 @@ void	validPlayerData(t_data *core)
 		error_exit(core, "Error\nToo Many Player Icons!\n");
 }
 
-void map_checker_spaces(char **map, t_data *core)
-{
-	int i;
-	int j;
-	int count;
-
-	count = 0;
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == '1' || map[i][j] == '0')
-				count++;
-			j++;
-		}
-		if (count == 0)
-			error_exit(core, "Error\nEmpty Space Line!\n");
-		count = 0;
-		i++;
-	}
-}
 
 int is_walkable(char c) 
 {
@@ -131,10 +108,14 @@ void check_surroundings(t_data *core, char **map, int i, int j)
     }
 }
 
+
 void map_checker_borders(char **map, t_data *core) 
 {
-	int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
     while (map[i])
 	{
 		j = 0;
@@ -176,7 +157,6 @@ void map_checker(t_data *core)
 		exit(write(1, "Error\nNo Top or Bottom\n", 23));
 	map_checker_tokens(core->Map, core);
 	validPlayerData(core);
-	map_checker_spaces(core->Map, core);
 	map_checker_TopBottom(core->Map, core);
 	map_checker_borders(core->Map, core);
 }
