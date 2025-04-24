@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 12:55:20 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:55:08 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	extracting_link(char **core)
 {
 	char *str;
 	char *temp;
+
 	str = NULL;
+	temp = NULL;
 	str = ft_strchr(*core, ' ');
 	if (str != NULL)
 		str++;
@@ -32,12 +34,15 @@ void	valid_file_checker(char *str, t_data *core)
 	fd = 0;
 
 	fd = open(str, O_RDONLY);
-	if (fd == -1) //Note that this should free the elements
+	if (fd == -1)
 		error_exit(core, "Error\nInvalid Texture Files!\n");
+	close(fd);
 }
 
 void	AllLinkExtractor(t_data *core)
 {
+	if (core->checker != 15)
+		error_exit(core, "Error\nDub Or No Textures!\n");
 	if (!core->North || !core->East || !core->South || !core->West)
 		error_exit(core, "Error\nEmpty Textures!\n");
 	extracting_link(&core->North);

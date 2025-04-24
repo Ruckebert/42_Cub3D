@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:51:53 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 14:42:28 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:09:23 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	validPlayerData(t_data *core)
 	if (core->direction == '\0')
 		error_exit(core, "Error\nInvalid Player Direction!\n");
 	if (core->error >= 2)
-		error_exit(core, "Error\n");
+		error_exit(core, "Error\nToo Many Player Icons!\n");
 }
 
 void map_checker_spaces(char **map, t_data *core)
@@ -67,7 +67,7 @@ void map_checker_spaces(char **map, t_data *core)
 			j++;
 		}
 		if (count == 0)
-			error_exit(core, "Error\nEmpty Space Line\n");
+			error_exit(core, "Error\nEmpty Space Line!\n");
 		count = 0;
 		i++;
 	}
@@ -83,7 +83,7 @@ int is_walkable(char c)
 
 int is_space(char c) 
 {
-	if (c == ' ')
+	if (c == ' ' || c == '\n')
 		return (1);
 	else
 		return (0);
@@ -91,7 +91,7 @@ int is_space(char c)
 
 int is_out_of_bounds(char **map, int i, int j) 
 {
-	if (i < 0 || map[i] == NULL || j < 0 || j >= (int)strlen(map[i]))
+	if (i < 0 || map[i] == NULL || j < 0 || j >= (int)ft_strlen(map[i]))
     	return (1);
 	else
 	 	return (0);
@@ -121,12 +121,12 @@ void check_surroundings(t_data *core, char **map, int i, int j)
         int nj = j + dir[d][1];
 
         if (is_out_of_bounds(map, ni, nj))
-            error_exit(core, "Error\nWalkable tile touches space\n");
+            error_exit(core, "Error\nOpen tile is Exposed!\n");
         
         char neighbor = map[ni][nj];
 
         if (is_space(neighbor))
-            error_exit(core, "Error\nWalkable tile touches space\n");
+            error_exit(core, "Error\nOpen tile is Exposed!\n");
 		d++;
     }
 }
@@ -179,5 +179,4 @@ void map_checker(t_data *core)
 	map_checker_spaces(core->Map, core);
 	map_checker_TopBottom(core->Map, core);
 	map_checker_borders(core->Map, core);
-	//Check if the map is closed
 }

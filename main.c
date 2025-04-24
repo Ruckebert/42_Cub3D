@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/22 12:52:47 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:11:42 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,25 @@ int main(int argc, char **argv)
 	
 	int count = GetData(argv[1], &core);
 	if (count == -1)
+	{
+		write(2, "Error\nGet Data Error!\n", 23);
 		return (-1);
-	core.Map = get_map_char_len(count + 1, argv[1], &core);
+	}
 	AllLinkExtractor(&core);
+	core.Map = get_map_char_len(count + 1, argv[1], &core);
 	map_checker(&core);
 	printer(core, count);
 
 	
 	//Here to free leaks
-	free_array(core.Map);
-	free(core.North);
-	free(core.South);
-	free(core.East);
-	free(core.West);
+	if (core.Map)
+		free_array(core.Map);
+	if (core.North)
+		free(core.North);
+	if (core.South)
+		free(core.South);
+	if (core.East)
+		free(core.East);
+	if (core.West)
+		free(core.West);
 }

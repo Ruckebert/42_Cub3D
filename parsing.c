@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 15:12:45 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:10:12 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 int	rgbcreator(int *type, char *line)
 {
+	//Change this to martin Atoi
 	int i;
 	i = 1;
 	while (line[i] && !ft_isdigit(line[i]))
+	{
+		if (line[i] != ' ')
+			return (free(line), 1);
 		i++;
+	}
 	int red = atoi(&line[i]);
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
@@ -34,6 +39,8 @@ int	rgbcreator(int *type, char *line)
 	int blue = atoi(&line[i]);
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
+	if (red >= 256 || green >= 256 || blue >= 256)
+		return (free(line), 1);
 	*type = (red << 16) | (green << 8) | blue;
 	if (line[i] != '\0' && line[i] != '\n')
 		return (free(line), 1);
@@ -70,13 +77,25 @@ int	extractF_C(t_data *core, char *line, int count,int fd)
 void	textures(t_data *core, char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0)
+	{
+		core->checker++;
 		core->North = ft_strdup(line);
+	}
 	if (ft_strncmp(line, "SO", 2) == 0)
+	{
+		core->checker += 2;
 		core->South = ft_strdup(line);
+	}
 	if (ft_strncmp(line, "WE", 2) == 0)
+	{
+		core->checker += 4;
 		core->West = ft_strdup(line);
+	}
 	if (ft_strncmp(line, "EA", 2) == 0)
+	{
+		core->checker += 8;
 		core->East = ft_strdup(line);
+	}
 }
 
 int GetData(char *file, t_data *core)
@@ -89,7 +108,7 @@ int GetData(char *file, t_data *core)
 	count = 0;
 	fd = open(file, O_RDWR);
 	if (fd == -1)
-		exit(write(2, "Error\nInvalid File!\n", 21)); //Change this since the exit code is 1
+		return (-1);
 	if (ft_strlen(file) < 5 || ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)	!= 0 || ft_strncmp(file + ft_strlen(file) - 5, "/.cub", 5) == 0)
 		map_error(fd, "Invalid File Type!\n");
 	line = get_next_line(fd, core);

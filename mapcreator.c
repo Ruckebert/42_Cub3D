@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:09:26 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 13:00:20 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:54:09 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_map_char_len_loop(char *line, char **map, int fd, t_data *vars)
 		ft_strcpy(map[i], line);
 		i++;
 		if (ft_strlen(line) == 1)
-			return (free_array(map), 1);
+			return (free_array(map), free(line), 1);
 		free(line);
 		line = get_next_line(fd, vars);
 		if (!line && vars->error == 1)

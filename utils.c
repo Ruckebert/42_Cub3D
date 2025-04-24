@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:17:58 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/23 12:56:37 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:52:27 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*ft_strcpy(char *dest, char *src)
 	*dest = *src;
 	return (start);
 }
-
 
 void error_exit(t_data *core, const char *msg) 
 {
