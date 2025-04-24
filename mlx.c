@@ -50,27 +50,89 @@ void init_dir(t_data *core, t_game *game)
 
 int init(t_data *core, t_game *game)
 {
-	game->core = core;
-	game->mlx_ptr = mlx_init();
-	if (!game->mlx_ptr)
-		return (1);
-	init_dir(core, game);
-	game->m_sq_size = 7;
-	game->win_x = WIDTH;
-	game->win_y = HEIGHT;
-	game->win_ptr = mlx_new_window(game->mlx_ptr,
-		game->win_x, game->win_y, "so_long_with_extrasteps");
-	if (!game->win_ptr)
-		return (1);
-	game->img = mlx_new_image(game->mlx_ptr, game->win_x, game->win_y);
-	game->img_data = mlx_get_data_addr(game->img, &game->bpp, &game->line_len, &game->endian);
-	int rows = map_height(core->Map);
-	int cols = 0;
-	while (core->Map[0][cols])
-		cols++;
-	game->mini_w    = cols * game->m_sq_size;
-	game->mini_h    = rows * game->m_sq_size;
-	game->mini_off_x = 0;
-	game->mini_off_y = 0;
-	return (0);
+    game->core    = core;
+    game->mlx_ptr = mlx_init();
+    if (!game->mlx_ptr)
+        return (1);
+
+    game->px += 0.5;
+    game->py += 0.5;
+    init_dir(core, game);
+
+    game->m_sq_size = 7;
+    game->win_x     = WIDTH;
+    game->win_y     = HEIGHT;
+    game->win_ptr   = mlx_new_window(
+        game->mlx_ptr, game->win_x, game->win_y,
+        "so_long_with_extrasteps"
+    );
+    if (!game->win_ptr)
+        return (1);
+
+    game->img      = mlx_new_image(
+        game->mlx_ptr, game->win_x, game->win_y
+    );
+    game->img_data = mlx_get_data_addr(
+        game->img, &game->bpp, &game->line_len, &game->endian
+    );
+
+    // ——— Load wall textures ———
+    int w, h;
+    game->tex_north.img = mlx_xpm_file_to_image(
+        game->mlx_ptr, core->North, &w, &h
+    );
+    game->tex_south.img = mlx_xpm_file_to_image(
+        game->mlx_ptr, core->South, &w, &h
+    );
+    game->tex_east.img  = mlx_xpm_file_to_image(
+        game->mlx_ptr, core->East,  &w, &h
+    );
+    game->tex_west.img  = mlx_xpm_file_to_image(
+        game->mlx_ptr, core->West,  &w, &h
+    );
+    game->tex_north.width  = w;
+    game->tex_north.height = h;
+    game->tex_south.width  = w;
+    game->tex_south.height = h;
+    game->tex_east.width   = w;
+    game->tex_east.height  = h;
+    game->tex_west.width   = w;
+    game->tex_west.height  = h;
+
+    game->tex_north.data = mlx_get_data_addr(
+        game->tex_north.img,
+        &game->tex_north.bpp,
+        &game->tex_north.line_len,
+        &game->tex_north.endian
+    );
+    game->tex_south.data = mlx_get_data_addr(
+        game->tex_south.img,
+        &game->tex_south.bpp,
+        &game->tex_south.line_len,
+        &game->tex_south.endian
+    );
+    game->tex_east.data = mlx_get_data_addr(
+        game->tex_east.img,
+        &game->tex_east.bpp,
+        &game->tex_east.line_len,
+        &game->tex_east.endian
+    );
+    game->tex_west.data = mlx_get_data_addr(
+        game->tex_west.img,
+        &game->tex_west.bpp,
+        &game->tex_west.line_len,
+        &game->tex_west.endian
+    );
+    // ——————————————————————
+
+    int rows = map_height(core->Map);
+    int cols = 0;
+    while (core->Map[0][cols])
+        cols++;
+    game->mini_w     = cols * game->m_sq_size;
+    game->mini_h     = rows * game->m_sq_size;
+    game->mini_off_x = 0;
+    game->mini_off_y = 0;
+
+    return (0);
 }

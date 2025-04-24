@@ -5,15 +5,15 @@
 
 /*Buffer for get next_line*/
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20000000000
+#  define BUFFER_SIZE 200000
 # endif
 # define ROT_SPEED (M_PI/16)
 # define HEIGHT 900
 # define WIDTH 1800
-#define NUM_RAYS 60
-#define FOV (M_PI / 3)  // 60 degrees
-#define RAY_LENGTH 100
-#define MAX_DEPTH 100
+# define NUM_RAYS 100
+# define FOV (M_PI / 3)  // 60 degrees
+# define RAY_LENGTH 1000
+# define MAX_DEPTH 1000
 # include <math.h>
 # include <fcntl.h>
 # include <mlx.h>

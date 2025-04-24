@@ -10,10 +10,10 @@ void DummySetter(t_data *core)
     core->py = 11;
     core->dir = 'N';
 
-    core->North = "~/Downloads/1.png";
-    core->South = "~/Downloads/2.png";
-    core->East = "~/Downloads/3.png";
-    core->West = "~/Downloads/4.png";
+    core->North = "/home/marsenij/Downloads/1.xpm";
+    core->South = "/home/marsenij/Downloads/2.xpm";
+    core->East = "/home/marsenij/Downloads/3.xpm";
+    core->West = "/home/marsenij/Downloads/4.xpm";
     
     core->Map = calloc(15, sizeof(char *));
     core->Map[0] = ft_strdup("        1111111111111111111111111");
@@ -65,8 +65,6 @@ int main(int argc, char **argv)
     
     mlx_loop_hook(game.mlx_ptr, (void *)render, &game);
     mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_key_press, &game);
-    
-    // Add this line to handle window close event (X button)
     mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_window_close, &game);
     
     mlx_loop(game.mlx_ptr);
