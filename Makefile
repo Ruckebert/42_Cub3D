@@ -1,13 +1,13 @@
 
-NAME = Cub3D
+NAME = cub3D
 
-SOURCE = main.c ft_atoi.c get_next_line.c get_next_line_utils.c parsing.c
+SOURCE = main.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c
 
 OBJECTS = $(SOURCE:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra -g
 
-COMP = cc -lreadline
+COMP = cc
 
 RM = rm -f
 

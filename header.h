@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 12:18:01 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:18:46 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*Buffer for get next_line*/
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20000000000
+#  define BUFFER_SIZE 10000000
 # endif
 
 //So_Long Functions but also math.h
@@ -41,10 +41,16 @@ typedef struct s_data
 	char	*South;
 	char	*East;
 	char	*West;
-
+	
+	int	px;
+	int	py;
+	char	direction;
+	
 	int		error;
+	int checker;
 
 } t_data;
+
 
 typedef struct s_game
 {
@@ -65,8 +71,11 @@ typedef struct s_game
 	
 } t_game;
 
-/*Parsing Functions*/
-int GetData(char *file, t_data *core);
+/*Parsing && Map Functions*/
+int		GetData(char *file, t_data *core);
+char	**get_map_char_len(int map_size, char *str, t_data *vars);
+void	AllLinkExtractor(t_data *core);
+void	map_checker(t_data *core);
 
 
 /*Get_Next_Line*/
@@ -75,5 +84,11 @@ size_t	ft_strlen1(const char *str);
 char	*ft_strchr1(const char *str, int c);
 char	*ft_strjoin1(char const *s1, char const *s2);
 char	*ft_strdup1(const char *src);
+
+/*Utils Function*/
+void	free_array(char **example);
+char	*ft_strcpy(char *dest, char *src);
+void	map_error(int fd, char *str);
+void	error_exit(t_data *core, const char *msg);
 
 #endif

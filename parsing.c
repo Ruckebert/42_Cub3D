@@ -6,62 +6,129 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 11:12:32 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:33:37 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	map_invalid(int fd)
+
+int	rgbcreator(int *type, char *line)
 {
-	close(fd);
-	write(2, "Error\nInvalid File!\n", 21);
-	exit(2);
+	//Change this to martin Atoi
+	int i;
+	i = 1;
+	while (line[i] && !ft_isdigit(line[i]))
+	{
+		if (line[i] != ' ')
+			return (free(line), 1);
+		i++;
+	}
+	int red = atoi(&line[i]);
+	while (line[i] && ft_isdigit(line[i]))
+		i++;
+	if (line[i] != ',') 
+		return (1);
+	i++;
+	int green = atoi(&line[i]);
+	while (line[i] && ft_isdigit(line[i]))
+		i++;
+	if (line[i] != ',') 
+		return (1);
+	i++;
+	if (line[i] == '\n' || line[i] == '\0')
+		return (1);
+	int blue = atoi(&line[i]);
+	while (line[i] && ft_isdigit(line[i]))
+		i++;
+	if (red >= 256 || green >= 256 || blue >= 256)
+		return (free(line), 1);
+	*type = (red << 16) | (green << 8) | blue;
+	if (line[i] != '\0' && line[i] != '\n')
+		return (free(line), 1);
+	return (0);
 }
 
-void	file_empty(int fd)
+int	extractF_C(t_data *core, char *line, int count,int fd)
 {
-	close(fd);
-	write(2, "Error\nFile is empty!\n", 21);
-	exit(2);
+	if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
+	{
+		if (ft_strncmp(line, "F", 1) == 0)
+		{
+			if (rgbcreator(&core->Top, line) == 1)
+			{
+				close(fd);
+				get_next_line(-1, NULL);
+				error_exit(core, "Error\nRGB Incorrect Format!\n");
+			}
+		}
+		if (ft_strncmp(line, "C", 1) == 0)
+		{
+			if (rgbcreator(&core->Bottom, line) == 1)
+			{
+				close(fd);
+				get_next_line(-1, NULL);
+				error_exit(core, "Error\nRGB Incorrect Format!\n");
+			}
+		}
+		count--;
+	}
+	return (count);
+}
+
+void	textures(t_data *core, char *line)
+{
+	if (ft_strncmp(line, "NO", 2) == 0)
+	{
+		core->checker++;
+		core->North = ft_strdup(line);
+	}
+	if (ft_strncmp(line, "SO", 2) == 0)
+	{
+		core->checker += 2;
+		core->South = ft_strdup(line);
+	}
+	if (ft_strncmp(line, "WE", 2) == 0)
+	{
+		core->checker += 4;
+		core->West = ft_strdup(line);
+	}
+	if (ft_strncmp(line, "EA", 2) == 0)
+	{
+		core->checker += 8;
+		core->East = ft_strdup(line);
+	}
 }
 
 int GetData(char *file, t_data *core)
 {
 	int				fd;
 	unsigned int	count;
-	char	*line;
+	char			*line;
 	
 	line = NULL;
 	count = 0;
 	fd = open(file, O_RDWR);
 	if (fd == -1)
-		exit(write(2, "Error\nInvalid File!\n", 21));
+		return (-1);
 	if (ft_strlen(file) < 5 || ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)	!= 0 || ft_strncmp(file + ft_strlen(file) - 5, "/.cub", 5) == 0)
-		map_invalid(fd);
+		map_error(fd, "Invalid File Type!\n"); //This can be outside the function if it has to be
 	line = get_next_line(fd, core);
 	if (!line)
-		file_empty(fd);
+		map_error(fd, "Empty File!\n");
 	while (line)
 	{
-		//Copies North
-		if (ft_strncmp(line, "NO", 2) == 0)
-			core->North = ft_strdup(line);
-		if (ft_strncmp(line, "SO", 2) == 0)
-			core->South = ft_strdup(line);
-		if (ft_strncmp(line, "WE", 2) == 0)
-			core->West = ft_strdup(line);
-		if (ft_strncmp(line, "EA", 2) == 0)
-			core->East = ft_strdup(line);
-
-			
-		//ft_printf("%d %s\n", count, line);
+		textures(core, line);
+		count = extractF_C(core, line, count, fd);
+		if (ft_strlen(line) == 1)
+			count--;
 		count++;
 		free(line);
 		line = get_next_line(fd, core);
 		if (!line && core->error == 1)
 			return (free(line), close(fd), -1);
 	}
-	close(fd);
-	return (count);
+	if (count == 4) //This can be somehwere also
+		return (-1);
+	return (close(fd), (count - 4));
 }

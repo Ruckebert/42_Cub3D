@@ -6,12 +6,13 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/16 14:03:29 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:18:49 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 #include "libft/libft.h"
+#include <stdlib.h>
 
 void	DummySetter(t_data *core)
 {
@@ -43,6 +44,26 @@ void	DummySetter(t_data *core)
 	
 }
 
+void printer(t_data core, int count)
+{
+	ft_printf("Count: %d\n", count);
+	ft_printf("Top: %d\n", core.Top);
+	ft_printf("Bottom: %d\n", core.Bottom);
+	ft_printf("North: %s\n", core.North);
+	ft_printf("South: %s\n", core.South);
+	ft_printf("East: %s\n", core.East);
+	ft_printf("West: %s\n", core.West);
+	if (core.Map[0][0] != '\0')
+	{
+		int i = 0;
+		while (core.Map[i])
+		{
+			ft_printf("%s", core.Map[i]);
+			i++;
+		}
+	}
+	ft_printf("\n");
+} 
 
 int main(int argc, char **argv)
 {
@@ -52,10 +73,34 @@ int main(int argc, char **argv)
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
 	{
-		write(2, "Not the correct amount of arguments\n", 37);
-		//write(2, "Error\n", 37);
+		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
+	
+	int count = GetData(argv[1], &core);
+	if (count <= -1)
+	{
+		write(2, "Error\nGet Data Error!\n", 23);
+		return (-1);
+	}
+	
+	AllLinkExtractor(&core);
+	core.Map = get_map_char_len(count + 2, argv[1], &core);
+	map_checker(&core);
+	printer(core, count);
+	
+	//Here to free leaks
+	if (core.Map)
+		free_array(core.Map);
+	if (core.North)
+		free(core.North);
+	if (core.South)
+		free(core.South);
+	if (core.East)
+		free(core.East);
+	if (core.West)
+		free(core.West);
+}
 //	if (GetData(argv[1], &core) == -1)
 //		return (1);
 	DummySetter(&core);
@@ -63,3 +108,4 @@ int main(int argc, char **argv)
 
 	init(&core, &game);
 }
+
