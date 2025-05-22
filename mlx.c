@@ -74,7 +74,7 @@ int init(t_data *core, t_game *game)
         game->mlx_ptr, game->win_x, game->win_y
     );
     game->img_data = mlx_get_data_addr(
-        game->img, &game->bpp, &game->line_len, &game->endian
+		game->img, &game->bpp, &game->line_len, &game->endian
     );
 
     // ——— Load wall textures ———
@@ -124,7 +124,6 @@ int init(t_data *core, t_game *game)
         &game->tex_west.line_len,
         &game->tex_west.endian
     );
-    // ——————————————————————
 
     int rows = map_height(core->map);
     int cols = 0;

@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/22 09:51:36 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:07:53 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ int on_window_close(void *param)
 
 int main(int argc, char **argv)
 {
-	t_data core;
-	t_game game;
+	int		count;
+	t_data 	core;
+	t_game 	game;
 
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
@@ -89,8 +90,7 @@ int main(int argc, char **argv)
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
-
-	int count = getdata(argv[1], &core, 0);
+	count = getdata(argv[1], &core, 0);
 	if (count <= -1)
 	{
 		write(2, "Error\nGet Data Error!\n", 23);
@@ -100,9 +100,9 @@ int main(int argc, char **argv)
 	alllinkextractor(&core);
 	core.map = get_map_char_len(count + 2, argv[1], &core);
 	map_checker(&core);
-	printer(core, count);
+	//printer(core, count);
 
-    dummysetter(&core);
+	//Martins part
     game.px = core.px;
     game.py = core.py;
     init(&core, &game);
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
     
     mlx_loop(game.mlx_ptr);
 
-	//Here to free leaks
+	//Here to free leaks, Leaks my part
 	if (core.map)
 		free_array(core.map);
 	if (core.north)

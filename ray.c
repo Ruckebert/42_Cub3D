@@ -95,9 +95,13 @@ void perform_dda(t_game *game, t_ray ray, t_dda *dda)
 void get_ray_hit_point(t_game *game, t_ray ray, t_dda dda,
     int *out_x, int *out_y)
 {
-    double hx = game->px + ray.dir_x * dda.perp_dist;
-    double hy = game->py + ray.dir_y * dda.perp_dist;
-    int tile = game->m_sq_size;
+    double hx;
+    double hy;
+    int tile;
+
+    hx = game->px + ray.dir_x * dda.perp_dist;
+    hy = game->py + ray.dir_y * dda.perp_dist;
+    tile = game->m_sq_size;
 
     *out_x = (int)(hx * tile);
     *out_y = (int)(hy * tile);
@@ -105,21 +109,27 @@ void get_ray_hit_point(t_game *game, t_ray ray, t_dda dda,
 
 void cast_ray_dda(t_game *game, double ray_angle)
 {
+    int px;
+    int py;
+    int ex;
+    int ey;
+
     t_ray ray = init_ray_values(ray_angle);
     t_dda dda = init_step_and_sidedist(ray, game->px, game->py);
     perform_dda(game, ray, &dda);
-    int px = (int)(game->px * game->m_sq_size + game->m_sq_size/2);
-    int py = (int)(game->py * game->m_sq_size + game->m_sq_size/2);
-    int ex, ey;
+    px = (int)(game->px * game->m_sq_size + game->m_sq_size/2);
+    py = (int)(game->py * game->m_sq_size + game->m_sq_size/2);
     get_ray_hit_point(game, ray, dda, &ex, &ey);
     draw_line(game, px, py, ex, ey, 0x00FF00);
 }
 
 void draw_ceiling_floor(t_game *game, int col, int draw_start, int draw_end, int ceiling_color, int floor_color)
 {
-    int screen_h = game->win_y;
-    int y = 0;
+    int screen_h;
+    int y;
 
+    screen_h = game->win_y;
+    y = 0;
     while (y < draw_start)
     {
         my_mlx_pixel_put(game, col, y, ceiling_color);
@@ -139,13 +149,9 @@ void draw_walls(t_game *game, int col, int draw_start, int draw_end, char tile_t
     int y;
 
     if (tile_type == '1')
-    {
         wall_color = 0x888888;
-    }
     else if (tile_type == '2')
-    {
         wall_color = 0xAA5500;
-    }
     else if (tile_type == '3')
     {
         wall_color = 0x00AA00;
@@ -153,9 +159,7 @@ void draw_walls(t_game *game, int col, int draw_start, int draw_end, char tile_t
         draw_end = (game->win_y / 2) + (draw_end - draw_start) / 4;
     }
     else
-    {
         wall_color = 0x888888;
-    }
     y = draw_start;
     while (y <= draw_end)
     {
@@ -166,47 +170,41 @@ void draw_walls(t_game *game, int col, int draw_start, int draw_end, char tile_t
 
 double correct_fisheye(double ray_ang, double player_angle, double perp_dist)
 {
-    double angle_diff = ray_ang - player_angle;
+    double angle_diff;
 
+    angle_diff = ray_ang - player_angle;
     while (angle_diff > M_PI)
-    {
         angle_diff -= 2 * M_PI;
-    }
     while (angle_diff < -M_PI)
-    {
         angle_diff += 2 * M_PI;
-    }
-    return perp_dist * cos(angle_diff);
+    return (perp_dist * cos(angle_diff));
 }
 
 void calculate_wall_height(t_game *game, double perp_dist, int *draw_start, int *draw_end)
 {
-    double proj_plane_dist = (game->win_x / 2.0) / tan(FOV / 2.0);
-    int slice_h = (int)(proj_plane_dist / perp_dist);
+    double proj_plane_dist;
+    int slice_h;
 
+    proj_plane_dist = (game->win_x / 2.0) / tan(FOV / 2.0);
+    slice_h = (int)(proj_plane_dist / perp_dist);
     *draw_start = (game->win_y / 2) - (slice_h / 2);
     *draw_end = *draw_start + slice_h;
-    
     if (*draw_start < 0)
-    {
         *draw_start = 0;
-    }
     if (*draw_end >= game->win_y)
-    {
         *draw_end = game->win_y - 1;
-    }
 }
 
 char get_tile_type(t_game *game, t_dda dda)
 {
-    char tile_type = '0';
-    
+    char tile_type;
+
+    tile_type = '0';
     if (dda.map_y >= 0 && dda.map_y < map_height(game->core->map) &&
         dda.map_x >= 0 && dda.map_x < (int)ft_strlen(game->core->map[dda.map_y]))
     {
         tile_type = game->core->map[dda.map_y][dda.map_x];
     }
-    
     return tile_type;
 }
 
@@ -329,12 +327,15 @@ void process_column(t_game *game, int col, double ray_ang)
 
 void render_3d_projection(t_game *game)
 {
-    double start_ang = game->angle - (FOV / 2.0);
-    double step      = FOV / (double)game->win_x;
+    double start_ang;
+    double step;
+    double ray_ang;
 
+    start_ang = game->angle - (FOV / 2.0);
+    step = FOV / (double)game->win_x;
     for (int col = 0; col < game->win_x; col++)
     {
-        double ray_ang = start_ang + col * step;
+        ray_ang = start_ang + col * step;
         process_column(game, col, ray_ang);
     }
 }

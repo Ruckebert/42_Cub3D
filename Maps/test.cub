@@ -1,7 +1,7 @@
-NO ./Textures/Ndum.txt
-SO ./Textures/Sdum.txt
-WE ./Textures/Wdum.txt
-EA ./Textures/Edum.txt
+NO ./Textures/file.xpm
+SO ./Textures/file.xpm
+WE ./Textures/file.xpm
+EA ./Textures/file.xpm
 
 F 200,255,10
 C 225,30,0

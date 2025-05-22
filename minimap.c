@@ -56,6 +56,7 @@ void draw_minimap(t_game *game)
 
 void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
 {
+    //Add a struct here for all the ints and floats
     int dx = x1 - x0;
     int dy = y1 - y0;
     int steps;
@@ -98,6 +99,7 @@ void draw_grid_lines(t_game *game, int off_x, int off_y, int cols, int rows, int
 
 void draw_grid(t_game *game)
 {
+    //Add this into a struct
     int tile = game->m_sq_size;
     int off_x = game->mini_off_x;
     int off_y = game->mini_off_y;
@@ -136,6 +138,7 @@ void draw_player_icon(t_game *game, int x, int y, int player_size)
 
 void draw_player(t_game *game)
 {
+    //add this into a struct
     int tile = game->m_sq_size;
     int margin = tile / 4;
     int player_size = tile - (2 * margin);
