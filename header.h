@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
 /*   Updated: 2025/04/25 12:18:46 by aruckenb         ###   ########.fr       */
@@ -26,6 +26,9 @@
 # include <mlx.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include "stdio.h"
+# include "stdlib.h"
+# include "unistd.h"
 
 typedef struct s_data 
 {
@@ -48,11 +51,32 @@ typedef struct s_data
 
 } t_data;
 
+
+typedef struct s_game
+{
+	int			px;
+	int			py;
+	int			pdir;
+	
+	void		*mlx_ptr;
+	void		*win_ptr;
+		
+	void		*img_N;
+	void		*img_S;
+	void		*img_W;
+	void		*img_E;
+	
+	void		*img_C;
+	void		*img_F;
+	
+} t_game;
+
 /*Parsing && Map Functions*/
 int		GetData(char *file, t_data *core);
 char	**get_map_char_len(int map_size, char *str, t_data *vars);
 void	AllLinkExtractor(t_data *core);
 void	map_checker(t_data *core);
+
 
 /*Get_Next_Line*/
 char	*get_next_line(int fd, t_data *vars);

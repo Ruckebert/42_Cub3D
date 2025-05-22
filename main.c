@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
 /*   Updated: 2025/04/25 12:18:49 by aruckenb         ###   ########.fr       */
@@ -21,10 +21,10 @@ void	DummySetter(t_data *core)
 	core->Bottom = 11189196;
 	
 	//Put the image file here
-	core->North = "";
-	core->South = "";
-	core->East = "";
-	core->West = "";
+	core->North = "~/Downloads/1.png";
+	core->South = "~/Downloads/2.png";
+	core->East = "~/Downloads/3.png";
+	core->West = "~/Downloads/4.png";
 	
 	core->Map = ft_calloc(sizeof(char *), 13);
 	core->Map[0] = "		1111111111111111111111111";
@@ -68,7 +68,8 @@ void printer(t_data core, int count)
 int main(int argc, char **argv)
 {
 	t_data core;
-
+	t_game game;
+	
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
 	{
@@ -100,3 +101,11 @@ int main(int argc, char **argv)
 	if (core.West)
 		free(core.West);
 }
+//	if (GetData(argv[1], &core) == -1)
+//		return (1);
+	DummySetter(&core);
+
+
+	init(&core, &game);
+}
+
