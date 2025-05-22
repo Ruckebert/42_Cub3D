@@ -6,39 +6,52 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 11:33:37 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 09:53:19 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-
-int	rgbcreator(int *type, char *line)
+int	rgbloop(char *line, int i, int *type)
 {
-	//Change this to martin Atoi
-	int i;
-	i = 1;
+	*type = ft_atoi1(&line[i]);
+	while (line[i] && ft_isdigit(line[i]))
+		i++;
+	if (line[i] != ',')
+		return (-1);
+	i++;
+	return (i);
+}
+
+int	rgbfirst(char *line, int i)
+{
 	while (line[i] && !ft_isdigit(line[i]))
 	{
 		if (line[i] != ' ')
-			return (free(line), 1);
+			return (free(line), -1);
 		i++;
 	}
-	int red = atoi(&line[i]);
-	while (line[i] && ft_isdigit(line[i]))
-		i++;
-	if (line[i] != ',') 
+	return (i);
+}
+
+int	rgbcreator(int *type, char *line, int i)
+{
+	int	red;
+	int	green;
+	int	blue;
+
+	i = rgbfirst(line, i);
+	if (i == -1)
 		return (1);
-	i++;
-	int green = atoi(&line[i]);
-	while (line[i] && ft_isdigit(line[i]))
-		i++;
-	if (line[i] != ',') 
+	i = rgbloop(line, i, &red);
+	if (i == -1)
 		return (1);
-	i++;
+	i = rgbloop(line, i, &green);
+	if (i == -1)
+		return (1);
 	if (line[i] == '\n' || line[i] == '\0')
 		return (1);
-	int blue = atoi(&line[i]);
+	blue = ft_atoi1(&line[i]);
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
 	if (red >= 256 || green >= 256 || blue >= 256)
@@ -49,13 +62,13 @@ int	rgbcreator(int *type, char *line)
 	return (0);
 }
 
-int	extractF_C(t_data *core, char *line, int count,int fd)
+int	extractf_c(t_data *core, char *line, int count, int fd)
 {
 	if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
 	{
 		if (ft_strncmp(line, "F", 1) == 0)
 		{
-			if (rgbcreator(&core->Top, line) == 1)
+			if (rgbcreator(&core->top, line, 1) == 1)
 			{
 				close(fd);
 				get_next_line(-1, NULL);
@@ -64,7 +77,7 @@ int	extractF_C(t_data *core, char *line, int count,int fd)
 		}
 		if (ft_strncmp(line, "C", 1) == 0)
 		{
-			if (rgbcreator(&core->Bottom, line) == 1)
+			if (rgbcreator(&core->bottom, line, 1) == 1)
 			{
 				close(fd);
 				get_next_line(-1, NULL);
@@ -81,45 +94,41 @@ void	textures(t_data *core, char *line)
 	if (ft_strncmp(line, "NO", 2) == 0)
 	{
 		core->checker++;
-		core->North = ft_strdup(line);
+		core->north = ft_strdup(line);
 	}
 	if (ft_strncmp(line, "SO", 2) == 0)
 	{
 		core->checker += 2;
-		core->South = ft_strdup(line);
+		core->south = ft_strdup(line);
 	}
 	if (ft_strncmp(line, "WE", 2) == 0)
 	{
 		core->checker += 4;
-		core->West = ft_strdup(line);
+		core->west = ft_strdup(line);
 	}
 	if (ft_strncmp(line, "EA", 2) == 0)
 	{
 		core->checker += 8;
-		core->East = ft_strdup(line);
+		core->east = ft_strdup(line);
 	}
 }
 
-int GetData(char *file, t_data *core)
+int	getdata(char *file, t_data *core, unsigned int count)
 {
-	int				fd;
-	unsigned int	count;
-	char			*line;
-	
+	int		fd;
+	char	*line;
+
 	line = NULL;
-	count = 0;
 	fd = open(file, O_RDWR);
 	if (fd == -1)
 		return (-1);
-	if (ft_strlen(file) < 5 || ft_strncmp(file + ft_strlen(file) - 4, ".cub", 4)	!= 0 || ft_strncmp(file + ft_strlen(file) - 5, "/.cub", 5) == 0)
-		map_error(fd, "Invalid File Type!\n"); //This can be outside the function if it has to be
 	line = get_next_line(fd, core);
 	if (!line)
 		map_error(fd, "Empty File!\n");
 	while (line)
 	{
 		textures(core, line);
-		count = extractF_C(core, line, count, fd);
+		count = extractf_c(core, line, count, fd);
 		if (ft_strlen(line) == 1)
 			count--;
 		count++;
@@ -128,7 +137,7 @@ int GetData(char *file, t_data *core)
 		if (!line && core->error == 1)
 			return (free(line), close(fd), -1);
 	}
-	if (count == 4) //This can be somehwere also
+	if (count == 4)
 		return (-1);
 	return (close(fd), (count - 4));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/25 12:18:49 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 09:51:36 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,51 @@
 #include "libft/libft.h"
 #include <stdlib.h>
 
-void	DummySetter(t_data *core)
+void	dummysetter(t_data *core)
 {
 	// r, g, b = 170, 187, 204
-	core->Top = 11189196;
-	core->Bottom = 11189196;
+	core->top = 11189196;
+	core->bottom = 11189196;
 	
 	//Put the image file here
-	core->North = "~/Downloads/1.png";
-	core->South = "~/Downloads/2.png";
-	core->East = "~/Downloads/3.png";
-	core->West = "~/Downloads/4.png";
+	core->north = "~/Downloads/1.png";
+	core->south = "~/Downloads/2.png";
+	core->east = "~/Downloads/3.png";
+	core->west = "~/Downloads/4.png";
 	
-	core->Map = ft_calloc(sizeof(char *), 13);
-	core->Map[0] = "		1111111111111111111111111";
-	core->Map[1] = "		1000000000110000000000001";
-	core->Map[2] = "		1000000000110000000000001";
-	core->Map[3] = "		1001000000000000000000001";
-	core->Map[4] = "111111111011000001110000000000001";
-	core->Map[5] = "100000000011000001110111111111111";
-	core->Map[6] = "11110111111111011100000010001";
-	core->Map[7] = "11110111111111011101010010001";
-	core->Map[8] = "11000000110101011100000010001";
-	core->Map[9] = "10000000000000001100000010001";
-	core->Map[10] = "10000000000000001101010010001";
-	core->Map[11] = "11000001110101011111011110N0111";
-	core->Map[12] = "11110111 1110101 101111010001";
-	core->Map[13] = "11111111 1111111 111111111111";
+	core->map = ft_calloc(sizeof(char *), 13);
+	core->map[0] = "		1111111111111111111111111";
+	core->map[1] = "		1000000000110000000000001";
+	core->map[2] = "		1000000000110000000000001";
+	core->map[3] = "		1001000000000000000000001";
+	core->map[4] = "111111111011000001110000000000001";
+	core->map[5] = "100000000011000001110111111111111";
+	core->map[6] = "11110111111111011100000010001";
+	core->map[7] = "11110111111111011101010010001";
+	core->map[8] = "11000000110101011100000010001";
+	core->map[9] = "10000000000000001100000010001";
+	core->map[10] = "10000000000000001101010010001";
+	core->map[11] = "11000001110101011111011110N0111";
+	core->map[12] = "11110111 1110101 101111010001";
+	core->map[13] = "11111111 1111111 111111111111";
 	
 }
 
 void printer(t_data core, int count)
 {
 	ft_printf("Count: %d\n", count);
-	ft_printf("Top: %d\n", core.Top);
-	ft_printf("Bottom: %d\n", core.Bottom);
-	ft_printf("North: %s\n", core.North);
-	ft_printf("South: %s\n", core.South);
-	ft_printf("East: %s\n", core.East);
-	ft_printf("West: %s\n", core.West);
-	if (core.Map[0][0] != '\0')
+	ft_printf("Top: %d\n", core.top);
+	ft_printf("Bottom: %d\n", core.bottom);
+	ft_printf("North: %s\n", core.north);
+	ft_printf("South: %s\n", core.south);
+	ft_printf("East: %s\n", core.east);
+	ft_printf("West: %s\n", core.west);
+	if (core.map[0][0] != '\0')
 	{
 		int i = 0;
-		while (core.Map[i])
+		while (core.map[i])
 		{
-			ft_printf("%s", core.Map[i]);
+			ft_printf("%s", core.map[i]);
 			i++;
 		}
 	}
@@ -68,44 +68,47 @@ void printer(t_data core, int count)
 int main(int argc, char **argv)
 {
 	t_data core;
-	t_game game;
-	
+	//t_game game;
+
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
 	{
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
-	
-	int count = GetData(argv[1], &core);
+	//Checks if valid file
+	if (ft_strlen(argv[1]) < 5 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4)	!= 0 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 5, "/.cub", 5) == 0)
+	{
+		write(2, "Error\nNot the correct amount of arguments\n", 43);
+		return (-1);
+	}
+
+	int count = getdata(argv[1], &core, 0);
 	if (count <= -1)
 	{
 		write(2, "Error\nGet Data Error!\n", 23);
 		return (-1);
 	}
-	
-	AllLinkExtractor(&core);
-	core.Map = get_map_char_len(count + 2, argv[1], &core);
+
+	alllinkextractor(&core);
+	core.map = get_map_char_len(count + 2, argv[1], &core);
 	map_checker(&core);
 	printer(core, count);
-	
+
 	//Here to free leaks
-	if (core.Map)
-		free_array(core.Map);
-	if (core.North)
-		free(core.North);
-	if (core.South)
-		free(core.South);
-	if (core.East)
-		free(core.East);
-	if (core.West)
-		free(core.West);
+	if (core.map)
+		free_array(core.map);
+	if (core.north)
+		free(core.north);
+	if (core.south)
+		free(core.south);
+	if (core.east)
+		free(core.east);
+	if (core.west)
+		free(core.west);
 }
 //	if (GetData(argv[1], &core) == -1)
 //		return (1);
-	DummySetter(&core);
-
-
-	init(&core, &game);
-}
+//	DummySetter(&core);
+//	init(&core, &game);
 

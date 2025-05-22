@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/25 12:18:46 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 09:50:26 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@
 # include "stdlib.h"
 # include "unistd.h"
 
-typedef struct s_data 
+typedef struct s_data
 {
-	char	**Map;		//Full Map
-	int		Top;
-	int		Bottom; //This contains the rbg for the ceiling and floor
+	char	**map;		//Full Map
+	int		top;
+	int		bottom; //This contains the rbg for the ceiling and floor
 
 	//These char contain the file path for the images
-	char	*North;
-	char	*South;
-	char	*East;
-	char	*West;
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
 	
 	int	px;
 	int	py;
@@ -50,7 +50,6 @@ typedef struct s_data
 	int checker;
 
 } t_data;
-
 
 typedef struct s_game
 {
@@ -72,9 +71,9 @@ typedef struct s_game
 } t_game;
 
 /*Parsing && Map Functions*/
-int		GetData(char *file, t_data *core);
+int		getdata(char *file, t_data *core, unsigned int	count);
 char	**get_map_char_len(int map_size, char *str, t_data *vars);
-void	AllLinkExtractor(t_data *core);
+void	alllinkextractor(t_data *core);
 void	map_checker(t_data *core);
 
 
@@ -90,5 +89,6 @@ void	free_array(char **example);
 char	*ft_strcpy(char *dest, char *src);
 void	map_error(int fd, char *str);
 void	error_exit(t_data *core, const char *msg);
+int		ft_atoi1(const char *nptr);
 
 #endif

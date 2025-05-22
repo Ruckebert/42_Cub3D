@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:17:58 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 11:58:45 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:39:22 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	free_array(char **example)
 		}
 		free(example);
 	}
-	
 }
 
 char	*ft_strcpy(char *dest, char *src)
@@ -44,20 +43,20 @@ char	*ft_strcpy(char *dest, char *src)
 	return (start);
 }
 
-void error_exit(t_data *core, const char *msg) 
+void	error_exit(t_data *core, const char *msg)
 {
-	if (core->Map)
-		free_array(core->Map);
-	if (core->North)
-		free(core->North);
-	if (core->South)
-		free(core->South);
-	if (core->East)
-		free(core->East);
-	if (core->West)
-		free(core->West);
+	if (core->map)
+		free_array(core->map);
+	if (core->north)
+		free(core->north);
+	if (core->south)
+		free(core->south);
+	if (core->east)
+		free(core->east);
+	if (core->west)
+		free(core->west);
 	write(2, msg, ft_strlen(msg));
-    exit(2);
+	exit(2);
 }
 
 void	map_error(int fd, char *str)
