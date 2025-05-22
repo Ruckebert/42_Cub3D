@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
+/*   Updated: 2025/05/22 09:50:26 by aruckenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef HEADER_H
 # define HEADER_H
 
@@ -6,6 +18,7 @@
 /*Buffer for get next_line*/
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 200000
+
 # endif
 # define ROT_SPEED (M_PI/16)
 # define HEIGHT 900
@@ -23,20 +36,26 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_data 
+typedef struct s_data
 {
-    char    **Map;      // Full Map
-    int     Top;
-    int     Bottom;     // r, g, b for ceiling and floor
 
-    // File paths for the images
-    char    *North;
-    char    *South;
-    char    *East;
-    char    *West;
+	char	**map;		//Full Map
+	int		top;
+	int		bottom; //This contains the rbg for the ceiling and floor
 
-    int     error;
-
+	//These char contain the file path for the images
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
+	
+	int	px;
+	int	py;
+	char	direction;
+	
+	int		error;
+	int checker;
+  
     int     px;
     int     py;
     char    dir;
@@ -107,8 +126,11 @@ typedef struct s_dda {
     double perp_dist;  // exact distance to the wall
 } t_dda;
 
-/* Parsing Functions */
-int GetData(char *file, t_data *core);
+/*Parsing && Map Functions*/
+int		getdata(char *file, t_data *core, unsigned int	count);
+char	**get_map_char_len(int map_size, char *str, t_data *vars);
+void	alllinkextractor(t_data *core);
+void	map_checker(t_data *core);
 
 /* Get_Next_Line */
 char    *get_next_line(int fd, t_data *vars);
@@ -133,10 +155,17 @@ void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
 /*Wall,Door*/
 int is_wall(t_game *game, double x, double y);
 void update_doors(t_game *game);
+
 /* Movement */
 void move(t_data *core, t_game *game);
 int on_key_press(int keycode, void *data);
-
 void    my_mlx_pixel_put(t_game *game, int x, int y, int color);
+
+/*Utils Function*/
+void	free_array(char **example);
+char	*ft_strcpy(char *dest, char *src);
+void	map_error(int fd, char *str);
+void	error_exit(t_data *core, const char *msg);
+int		ft_atoi1(const char *nptr);
 
 #endif

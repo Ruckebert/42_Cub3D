@@ -1,7 +1,7 @@
-NAME = Cub3D
+NAME = cub3D
 
-# Source and object files
-SOURCE = main.c ray.c 3D.c door_wall.c ft_atoi.c movement.c minimap.c mlx.c get_next_line.c get_next_line_utils.c parsing.c
+SOURCE = main.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c ft_atoi1.c ray.c 3D.c door_wall.c movement.c minimap.c mlx.c
+
 OBJECTS = $(SOURCE:.c=.o)
 
 # Compiler settings
@@ -11,6 +11,8 @@ RM = rm -f
 
 # MiniLibX path (includes both lib and header)
 MLX_PATH = mlx_linux
+
+COMP = cc
 
 # Libft
 LIBFT = ./libft/libft.a

@@ -1,0 +1,13 @@
+NO ./Textures/Ndum.txt
+SO ./Textures/Sdum.txt
+WE ./Textures/Wdum.txt
+EA ./Textures/Edum.txt
+
+F 20,1,1
+C 200,1,1
+
+111111
+1 1011
+111011
+10E001
+111111
