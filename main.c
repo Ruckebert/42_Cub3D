@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/04/24 13:45:28 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:18:49 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void printer(t_data core, int count)
 		}
 	}
 	ft_printf("\n");
-}
+} 
 
 int main(int argc, char **argv)
 {
