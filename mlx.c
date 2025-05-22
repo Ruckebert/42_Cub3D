@@ -1,10 +1,21 @@
 #include "header.h"
+#include <mlx.h>
 
 int on_destroy(t_game *game)
 {
     mlx_destroy_window(game->mlx_ptr, game->win_ptr);
     mlx_destroy_display(game->mlx_ptr);
-    free(game->mlx_ptr);
+	free(game->mlx_ptr);
+	if (game->core->map)
+		free_array(game->core->map);
+	if (game->core->map)
+		free(game->core->west);
+	if (game->core->map)
+		free(game->core->east);
+	if (game->core->map)
+		free(game->core->south);
+	if (game->core->map)
+		free(game->core->north);
     exit(0);
     return (0);
 }

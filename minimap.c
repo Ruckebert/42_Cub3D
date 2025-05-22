@@ -1,7 +1,7 @@
 #include "header.h"
 
 void my_mlx_pixel_put(t_game *game, int x, int y, int color)
-{
+{ //Here is an uninitalised value size of 8, also a unconditional jump
     if (x < 0 || x >= game->win_x || y < 0 || y >= game->win_y)
         return;
     char *dst = game->img_data
@@ -55,7 +55,7 @@ void draw_minimap(t_game *game)
 }
 
 void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
-{
+{   //Note here is also a conditional jump
     //Add a struct here for all the ints and floats
     int dx = x1 - x0;
     int dy = y1 - y0;

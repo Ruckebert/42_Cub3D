@@ -4,7 +4,6 @@ SOURCE = main.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c ut
 
 OBJECTS = $(SOURCE:.c=.o)
 
-# Compiler settings
 CFLAGS = -Wall -Wextra -Werror -g
 COMP = cc
 RM = rm -f
@@ -14,16 +13,13 @@ MLX_PATH = mlx_linux
 
 COMP = cc
 
-# Libft
 LIBFT = ./libft/libft.a
 
 all: $(NAME)
 
-# Compile .c to .o
 %.o: %.c
 	$(COMP) $(CFLAGS) -I$(MLX_PATH) -c $< -o $@
 
-# Final binary linking
 $(NAME): $(OBJECTS)
 	$(MAKE) -C ./libft --no-print-directory
 	$(COMP) $(CFLAGS) $(OBJECTS) -L$(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz $(LIBFT) -o $(NAME)

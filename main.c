@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/22 11:07:53 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:56:23 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int main(int argc, char **argv)
 	t_game 	game;
 
 	ft_bzero(&core, sizeof(core));
+	ft_bzero(&game, sizeof(game));
 	if (argc != 2)
 	{
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
@@ -101,7 +102,7 @@ int main(int argc, char **argv)
 	core.map = get_map_char_len(count + 2, argv[1], &core);
 	map_checker(&core);
 	//printer(core, count);
-
+	
 	//Martins part
     game.px = core.px;
     game.py = core.py;
@@ -114,15 +115,4 @@ int main(int argc, char **argv)
     
     mlx_loop(game.mlx_ptr);
 
-	//Here to free leaks, Leaks my part
-	if (core.map)
-		free_array(core.map);
-	if (core.north)
-		free(core.north);
-	if (core.south)
-		free(core.south);
-	if (core.east)
-		free(core.east);
-	if (core.west)
-		free(core.west);
 }
