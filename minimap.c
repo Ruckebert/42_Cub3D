@@ -27,16 +27,16 @@ void fill_tile(t_game *game, int base_x, int base_y, int tile, int color)
 void draw_minimap(t_game *game)
 {
     int tile = game->m_sq_size;
-    int rows = map_height(game->core->Map);
+    int rows = map_height(game->core->map);
     int i = 0;
     while (i < rows)
     {
-        int cols = ft_strlen(game->core->Map[i]);
+        int cols = ft_strlen(game->core->map[i]);
         int j = 0;
         while (j < cols)
         {
             int color;
-            char map_tile = game->core->Map[i][j];
+            char map_tile = game->core->map[i][j];
             if (map_tile == '1')
                 color = 0xFFFFFF;
             else if (map_tile == '2')

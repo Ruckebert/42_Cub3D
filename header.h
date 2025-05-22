@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/22 09:50:26 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:52:25 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ typedef struct s_data
 	
 	int	px;
 	int	py;
-	char	direction;
 	
+	char	direction;
 	int		error;
-	int checker;
-  
-    int     px;
-    int     py;
+	int		checker;
     char    dir;
+
 } t_data;
 
 typedef struct s_texture

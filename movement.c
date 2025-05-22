@@ -13,14 +13,14 @@ void check_and_open_door(t_game *game, double new_x, double new_y)
 {
     int map_x = (int)floor(new_x);
     int map_y = (int)floor(new_y);
-    if (map_y >= 0 && map_y < map_height(game->core->Map) &&
-        game->core->Map[map_y] != NULL &&
-        map_x >= 0 && map_x < (int)ft_strlen(game->core->Map[map_y])) {
-        char tile = game->core->Map[map_y][map_x];
+    if (map_y >= 0 && map_y < map_height(game->core->map) &&
+        game->core->map[map_y] != NULL &&
+        map_x >= 0 && map_x < (int)ft_strlen(game->core->map[map_y])) {
+        char tile = game->core->map[map_y][map_x];
         printf("Tile at destination: '%c'\n", tile);
         if (tile == '2') {
             printf("Attempting to open door at (%d, %d)\n", map_x, map_y);
-            game->core->Map[map_y][map_x] = '3';
+            game->core->map[map_y][map_x] = '3';
         }
     }
 }

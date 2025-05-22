@@ -1,4 +1,5 @@
 #include "header.h"
+
 int on_destroy(t_game *game)
 {
     mlx_destroy_window(game->mlx_ptr, game->win_ptr);
@@ -79,16 +80,16 @@ int init(t_data *core, t_game *game)
     // ——— Load wall textures ———
     int w, h;
     game->tex_north.img = mlx_xpm_file_to_image(
-        game->mlx_ptr, core->North, &w, &h
+        game->mlx_ptr, core->north, &w, &h
     );
     game->tex_south.img = mlx_xpm_file_to_image(
-        game->mlx_ptr, core->South, &w, &h
+        game->mlx_ptr, core->south, &w, &h
     );
     game->tex_east.img  = mlx_xpm_file_to_image(
-        game->mlx_ptr, core->East,  &w, &h
+        game->mlx_ptr, core->east,  &w, &h
     );
     game->tex_west.img  = mlx_xpm_file_to_image(
-        game->mlx_ptr, core->West,  &w, &h
+        game->mlx_ptr, core->west,  &w, &h
     );
     game->tex_north.width  = w;
     game->tex_north.height = h;
@@ -125,9 +126,9 @@ int init(t_data *core, t_game *game)
     );
     // ——————————————————————
 
-    int rows = map_height(core->Map);
+    int rows = map_height(core->map);
     int cols = 0;
-    while (core->Map[0][cols])
+    while (core->map[0][cols])
         cols++;
     game->mini_w     = cols * game->m_sq_size;
     game->mini_h     = rows * game->m_sq_size;

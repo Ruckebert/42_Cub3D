@@ -59,7 +59,7 @@ void perform_dda(t_game *game, t_ray ray, t_dda *dda)
 {
     int hit = 0;
     int depth = MAX_DEPTH;
-    int H = map_height(game->core->Map);
+    int H = map_height(game->core->map);
     int W;
     char tile;
 
@@ -79,10 +79,10 @@ void perform_dda(t_game *game, t_ray ray, t_dda *dda)
         }
         if (dda->map_y < 0 || dda->map_y >= H)
             break;
-        W = row_width(game->core->Map, dda->map_y);
+        W = row_width(game->core->map, dda->map_y);
         if (dda->map_x < 0 || dda->map_x >= W)
             break;
-        tile = game->core->Map[dda->map_y][dda->map_x];
+        tile = game->core->map[dda->map_y][dda->map_x];
         if (tile == '1' || tile == '2')
             hit = 1;
     }
@@ -201,10 +201,10 @@ char get_tile_type(t_game *game, t_dda dda)
 {
     char tile_type = '0';
     
-    if (dda.map_y >= 0 && dda.map_y < map_height(game->core->Map) &&
-        dda.map_x >= 0 && dda.map_x < (int)ft_strlen(game->core->Map[dda.map_y]))
+    if (dda.map_y >= 0 && dda.map_y < map_height(game->core->map) &&
+        dda.map_x >= 0 && dda.map_x < (int)ft_strlen(game->core->map[dda.map_y]))
     {
-        tile_type = game->core->Map[dda.map_y][dda.map_x];
+        tile_type = game->core->map[dda.map_y][dda.map_x];
     }
     
     return tile_type;
@@ -272,7 +272,7 @@ static void draw_ceiling(t_game *game, int col, int start)
     y = 0;
     while (y < start)
     {
-        my_mlx_pixel_put(game, col, y, game->core->Top);
+        my_mlx_pixel_put(game, col, y, game->core->top);
         y++;
     }
 }
@@ -284,7 +284,7 @@ static void draw_floor(t_game *game, int col, int end)
     y = end + 1;
     while (y < game->win_y)
     {
-        my_mlx_pixel_put(game, col, y, game->core->Bottom);
+        my_mlx_pixel_put(game, col, y, game->core->bottom);
         y++;
     }
 }

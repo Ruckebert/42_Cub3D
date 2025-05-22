@@ -4,7 +4,7 @@ int is_adjacent_to_door(t_game *game)
 {
     int player_x = (int)floor(game->px);
     int player_y = (int)floor(game->py);
-    int height = map_height(game->core->Map);
+    int height = map_height(game->core->map);
     
     // Only check the 4 orthogonal (non-diagonal) adjacent tiles
     // These are: North, East, South, West
@@ -20,15 +20,15 @@ int is_adjacent_to_door(t_game *game)
             continue;
         
         // Make sure the row exists and has enough columns
-        if (game->core->Map[check_y] == NULL)
+        if (game->core->map[check_y] == NULL)
             continue;
             
-        int width = ft_strlen(game->core->Map[check_y]);
+        int width = ft_strlen(game->core->map[check_y]);
         if (check_x < 0 || check_x >= width)
             continue;
             
         // Check if this adjacent tile is a closed door
-        if (game->core->Map[check_y][check_x] == '2')
+        if (game->core->map[check_y][check_x] == '2')
             return 1;
     }
     return 0;
@@ -38,21 +38,21 @@ void update_doors(t_game *game)
 {
     int player_x = (int)floor(game->px);
     int player_y = (int)floor(game->py);
-    int height = map_height(game->core->Map);
+    int height = map_height(game->core->map);
     
-    if (!game || !game->core || !game->core->Map)
+    if (!game || !game->core || !game->core->map)
         return;
     
     // Check all doors in the map
     for (int y = 0; y < height; y++) {
         // Make sure the row exists
-        if (game->core->Map[y] == NULL)
+        if (game->core->map[y] == NULL)
             continue;
             
-        int width = ft_strlen(game->core->Map[y]);
+        int width = ft_strlen(game->core->map[y]);
         for (int x = 0; x < width; x++) {
             // If this is a closed door
-            if (game->core->Map[y][x] == '2') {
+            if (game->core->map[y][x] == '2') {
                 // Check if player is orthogonally adjacent to this specific door
                 // Only horizontally or vertically adjacent - not diagonally
                 int is_adjacent = 0;
@@ -64,11 +64,11 @@ void update_doors(t_game *game)
                 }
                 
                 if (is_adjacent) {
-                    game->core->Map[y][x] = '3';  // Open the door
+                    game->core->map[y][x] = '3';  // Open the door
                 }
             }
             // If this is an open door
-            else if (game->core->Map[y][x] == '3') {
+            else if (game->core->map[y][x] == '3') {
                 // Check if player is still orthogonally adjacent
                 int is_adjacent = 0;
                 
@@ -79,7 +79,7 @@ void update_doors(t_game *game)
                 }
                 
                 if (!is_adjacent) {
-                    game->core->Map[y][x] = '2';  // Close the door
+                    game->core->map[y][x] = '2';  // Close the door
                 }
             }
         }
@@ -89,20 +89,20 @@ int is_wall(t_game *game, double x, double y)
 {
     int map_x = (int)floor(x);
     int map_y = (int)floor(y);
-    int height = map_height(game->core->Map);
+    int height = map_height(game->core->map);
     
     if (map_y < 0 || map_y >= height)
         return 1;
         
     // Check if row exists
-    if (game->core->Map[map_y] == NULL)
+    if (game->core->map[map_y] == NULL)
         return 1;
         
-    int map_width = ft_strlen(game->core->Map[map_y]);
+    int map_width = ft_strlen(game->core->map[map_y]);
     if (map_x < 0 || map_x >= map_width)
         return 1;
         
-    char tile = game->core->Map[map_y][map_x];
+    char tile = game->core->map[map_y][map_x];
     
     // Only '1' (walls) and '2' (closed doors) block movement
     // '3' (open doors) should allow movement
