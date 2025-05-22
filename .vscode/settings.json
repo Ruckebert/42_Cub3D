@@ -5,6 +5,7 @@
 		"string_view": "c",
 		"ranges": "c",
 		"stdlib.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"header.h": "c"
 	}
 }

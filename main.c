@@ -21,10 +21,10 @@ void	dummysetter(t_data *core)
 	core->bottom = 11189196;
 	
 	//Put the image file here
-	core->north = "~/Downloads/1.png";
-	core->south = "~/Downloads/2.png";
-	core->east = "~/Downloads/3.png";
-	core->west = "~/Downloads/4.png";
+	core->north = "/home/marsenij/Downloads/1.xpm";
+	core->south = "/home/marsenij/Downloads/2.xpm";
+	core->east = "/home/marsenij/Downloads/3.xpm";
+	core->west = "/home/marsenij/Downloads/4.xpm";
 	
 	core->map = ft_calloc(sizeof(char *), 13);
 	core->map[0] = "		1111111111111111111111111";
@@ -41,7 +41,7 @@ void	dummysetter(t_data *core)
 	core->map[11] = "11000001110101011111011110N0111";
 	core->map[12] = "11110111 1110101 101111010001";
 	core->map[13] = "11111111 1111111 111111111111";
-	
+
 }
 
 void printer(t_data core, int count)
@@ -65,10 +65,17 @@ void printer(t_data core, int count)
 	ft_printf("\n");
 } 
 
+int on_window_close(void *param)
+{
+    t_game *game = (t_game *)param;
+    on_destroy(game);
+    return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_data core;
-	//t_game game;
+	t_game game;
 
 	ft_bzero(&core, sizeof(core));
 	if (argc != 2)
@@ -95,6 +102,18 @@ int main(int argc, char **argv)
 	map_checker(&core);
 	printer(core, count);
 
+    dummysetter(&core);
+    game.px = core.px;
+    game.py = core.py;
+    init(&core, &game);
+    render(&game);
+    
+    mlx_loop_hook(game.mlx_ptr, (void *)render, &game);
+    mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_key_press, &game);
+    mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_window_close, &game);
+    
+    mlx_loop(game.mlx_ptr);
+
 	//Here to free leaks
 	if (core.map)
 		free_array(core.map);
@@ -107,8 +126,3 @@ int main(int argc, char **argv)
 	if (core.west)
 		free(core.west);
 }
-//	if (GetData(argv[1], &core) == -1)
-//		return (1);
-//	DummySetter(&core);
-//	init(&core, &game);
-
