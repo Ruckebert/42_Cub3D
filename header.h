@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/29 14:34:18 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:25:28 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ typedef struct s_pos {
 	int y;
 } t_pos;
 
+typedef struct s_line_data
+{
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+	int	color;
+}	t_line_data;
+
+typedef struct s_line_points
+{
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+}	t_line_points;
 
 typedef struct s_line {
 	int dx;
@@ -170,40 +186,40 @@ char    *ft_strjoin1(char const *s1, char const *s2);
 char    *ft_strdup1(const char *src);
 
 /* Gameloop-Minimap */
-int init(t_data *core, t_game *game);
-void render(t_game *game);
-void draw_player(t_game *game);
-void draw_minimap(t_game *game);
-void draw_grid(t_game *game);
-void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color);
-void cast_ray_dda(t_game *game, double ray_angle);
-void render_3d_projection(t_game *game);
-int map_height(char **map);
-int on_destroy(t_game *game);
-void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
-int tile_exists(t_game *game, int row, int col);
-void fill_tile(t_game *game, t_pos base, int tile_size, int color);
-t_pos get_player_screen_pos(t_game *game);
+int		init(t_data *core, t_game *game);
+void	render(t_game *game);
+void	draw_player(t_game *game);
+void	draw_minimap(t_game *game);
+void	draw_grid(t_game *game);
+void	draw_line(t_game *game, t_line_points pts, int color);
+void	cast_ray_dda(t_game *game, double ray_angle);
+void	render_3d_projection(t_game *game);
+int		map_height(char **map);
+int		on_destroy(t_game *game);
+void	eval_keycode(int keycode, t_game *game, double *dx, double *dy);
+int		tile_exists(t_game *game, int row, int col);
+void	fill_tile(t_game *game, t_pos base, int tile_size, int color);
+t_pos	get_player_screen_pos(t_game *game);
 
 /*Map utils*/
-char get_tile_at_pos(char **map, int x, int y);
-int is_valid_map_pos(char **map, int x, int y);
-int get_map_width(char **map, int y);
+char	get_tile_at_pos(char **map, int x, int y);
+int		is_valid_map_pos(char **map, int x, int y);
+int		get_map_width(char **map, int y);
 void	init_minimap(t_data *core, t_game *game);
 
 /*Move utils*/
-void try_open_door(t_game *game, double x, double y);
-void try_move_axis(t_game *game, double new_pos, double *current_pos, double buffer, int is_x_axis);
-void rotate_player(t_game *game, double delta);
+void	try_open_door(t_game *game, double x, double y);
+void	try_move_axis(t_game *game, double new_pos, double *current_pos, double buffer, int is_x_axis);
+void	rotate_player(t_game *game, double delta);
 
 /*Wall,Door*/
-int is_wall(t_game *game, double x, double y);
-void update_doors(t_game *game);
+int		is_wall(t_game *game, double x, double y);
+void	update_doors(t_game *game);
 
 /* Movement */
-void move(t_data *core, t_game *game);
-int on_key_press(int keycode, void *data);
-void    my_mlx_pixel_put(t_game *game, int x, int y, int color);
+void	move(t_data *core, t_game *game);
+int		on_key_press(int keycode, void *data);
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
 
 /*Utils Function*/
 void	free_array(char **example);
@@ -211,5 +227,18 @@ char	*ft_strcpy(char *dest, char *src);
 void	map_error(int fd, char *str);
 void	error_exit(t_data *core, const char *msg);
 int		ft_atoi1(const char *nptr);
+int		can_move_to(t_game *game, double x, double y, double buffer);
+
+//raycast_utils
+t_ray			init_ray_values(double ray_angle);
+t_dda			init_step_and_sidedist(t_ray ray, double px, double py);
+void			perform_dda(t_game *game, t_ray ray, t_dda *dda);
+double			correct_fisheye(double ray_angle, double player_angle, double perp_dist);
+t_wall_params	compute_wall_params(t_game *game, t_raycast_result *res);
+void			draw_ceiling(t_game *game, int col, int start);
+void			draw_floor(t_game *game, int col, int end);
+void			draw_textured_wall(t_game *game, int col, t_wall_params *p);
+void			init_line(t_line *line, t_line_points pts);
+
 
 #endif

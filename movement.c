@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:51:50 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 14:03:26 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:39:48 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,19 @@ int	on_key_press(int keycode, void *param)
 		|| keycode == XK_a || keycode == XK_d)
 		playermove(keycode, game);
 	return (0);
+}
+void	try_move_axis(t_game *game, double new_pos,
+			double *current_pos, double buffer, int is_x_axis)
+{
+	double	test_x;
+	double	test_y;
+
+	test_x = game->px;
+	test_y = game->py;
+	if (is_x_axis)
+		test_x = new_pos;
+	else
+		test_y = new_pos;
+	if (can_move_to(game, test_x, test_y, buffer))
+		*current_pos = new_pos;
 }

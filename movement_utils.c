@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:01 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 14:27:11 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:40:04 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	try_open_door(t_game *game, double x, double y)
 		game->core->map[map_y][map_x] = '3';
 }
 
-static int	can_move_to(t_game *game, double x, double y, double buffer)
+int	can_move_to(t_game *game, double x, double y, double buffer)
 {
 	if (is_wall(game, x + buffer, y + buffer))
 		return (0);
