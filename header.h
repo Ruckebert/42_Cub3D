@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/27 12:49:24 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:34:18 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 
-/*Buffer for get next_line*/
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 200000
 
@@ -24,7 +23,7 @@
 # define HEIGHT 900
 # define WIDTH 1800
 # define NUM_RAYS 100
-# define FOV (M_PI / 3)  // 60 degrees
+# define FOV (M_PI / 3)
 # define RAY_LENGTH 1000
 # define MAX_DEPTH 1000
 # include <math.h>
@@ -37,29 +36,28 @@
 # include <unistd.h>
 
 typedef struct s_pos {
-    int x;
-    int y;
+	int x;
+	int y;
 } t_pos;
 
 
 typedef struct s_line {
-    int dx;
-    int dy;
-    int steps;
-    float x_inc;
-    float y_inc;
-    float x;
-    float y;
+	int dx;
+	int dy;
+	int steps;
+	float x_inc;
+	float y_inc;
+	float x;
+	float y;
 } t_line;
 
 typedef struct s_data
 {
 
-	char	**map;		//Full Map
+	char	**map;
 	int		top;
-	int		bottom; //This contains the rbg for the ceiling and floor
+	int		bottom;
 
-	//These char contain the file path for the images
 	char	*north;
 	char	*south;
 	char	*east;
@@ -71,89 +69,91 @@ typedef struct s_data
 	char	direction;
 	int		error;
 	int		checker;
-    char    dir;
+	char    dir;
 
 } t_data;
 
 typedef struct s_texture
 {
-    void *img;
-    char *data;
-    int width;
-    int height;
-    int bpp;
-    int line_len;
-    int endian;
+	void *img;
+	char *data;
+	int width;
+	int height;
+	int bpp;
+	int line_len;
+	int endian;
 } t_texture;
 
 typedef struct s_game
 {
-    t_data      *core;
-    double      px;
-    double      py;
-    double      dir_x;
-    double      dir_y;
-    double      angle;
+	t_data      *core;
+	double      px;
+	double      py;
+	double      dir_x;
+	double      dir_y;
+	double      angle;
 
-    int         m_sq_size;
-    int         pdir;
-    
-    void        *mlx_ptr;
-    void        *win_ptr;
-    int         win_x;
-    int         win_y;  
-    
-    void        *img_N;
-    void        *img_S;
-    void        *img_W;
-    void        *img_E;
-    
-    void        *img_C;
-    void        *img_F;
-    
-    void        *img;
-    char        *img_data;
-    int         bpp, line_len, endian;
+	int         m_sq_size;
+	int         pdir;
+	
+	void        *mlx_ptr;
+	void        *win_ptr;
+	int         win_x;
+	int         win_y;  
+	
+	void        *img_N;
+	void        *img_S;
+	void        *img_W;
+	void        *img_E;
+	
+	void        *img_C;
+	void        *img_F;
+	
+	void        *img;
+	char        *img_data;
+	int         bpp, line_len, endian;
 
-    /* minimap geometry, in pixels */
-    int         mini_w;
-    int         mini_h;
-    int         mini_off_x;
-    int         mini_off_y;
+	/* minimap geometry, in pixels */
+	int         mini_w;
+	int         mini_h;
+	int         mini_off_x;
+	int         mini_off_y;
 
-    t_texture tex_north;
-    t_texture tex_south;
-    t_texture tex_east;
-    t_texture tex_west;
+	t_texture tex_north;
+	t_texture tex_south;
+	t_texture tex_east;
+	t_texture tex_west;
 } t_game;
 
 typedef struct s_ray {
-    double dir_x, dir_y;
-    double delta_x, delta_y;
+	double dir_x, dir_y;
+	double delta_x, delta_y;
 } t_ray;
 
 typedef struct s_dda {
-    int   step_x,    step_y;
-    int   map_x,     map_y;
-    double side_x,   side_y;
-    int   side;
-    double perp_dist;
+	int   step_x,    step_y;
+	int   map_x,     map_y;
+	double side_x,   side_y;
+	int   side;
+	double perp_dist;
 } t_dda;
 
 typedef struct s_raycast_result
 {
-    t_ray ray;
-    t_dda dda;
-    char tile_type;
-    double corrected_dist;
+	t_ray ray;
+	t_dda dda;
+	char tile_type;
+	double corrected_dist;
 } t_raycast_result;
 
 typedef struct s_wall_params
 {
-    int start;
-    int end;
-    t_texture *tex;
-    int tex_x;
+	int start;
+	int end;
+	int original_start;
+	int wall_height;
+	t_texture *tex;
+	int tex_x;
 } t_wall_params;
 
 /*Parsing && Map Functions*/
@@ -181,11 +181,15 @@ void render_3d_projection(t_game *game);
 int map_height(char **map);
 int on_destroy(t_game *game);
 void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
+int tile_exists(t_game *game, int row, int col);
+void fill_tile(t_game *game, t_pos base, int tile_size, int color);
+t_pos get_player_screen_pos(t_game *game);
 
 /*Map utils*/
 char get_tile_at_pos(char **map, int x, int y);
 int is_valid_map_pos(char **map, int x, int y);
 int get_map_width(char **map, int y);
+void	init_minimap(t_data *core, t_game *game);
 
 /*Move utils*/
 void try_open_door(t_game *game, double x, double y);

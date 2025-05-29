@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/29 13:52:15 by marsenij          #+#    #+#             */
+/*   Updated: 2025/05/29 14:31:24 by marsenij         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 void my_mlx_pixel_put(t_game *game, int x, int y, int color)
@@ -32,7 +44,7 @@ int get_tile_color(char map_tile)
     else if (map_tile == '3')
         return 0x00FF00;
     else if (map_tile == '\n')
-        return 0x000000;
+        return 0x00000000;
     else
         return 0x888888;
 }
@@ -58,8 +70,11 @@ void draw_minimap(t_game *game)
         {
             char map_tile = game->core->map[i][j];
             int color = get_tile_color(map_tile);
-            t_pos base = get_minimap_pos(game, j, i);
-            fill_tile(game, base, game->m_sq_size, color);
+            if (color != 0x00000000)
+            {
+                t_pos base = get_minimap_pos(game, j, i);
+                fill_tile(game, base, game->m_sq_size, color);
+            }
             j++;
         }
         i++;
@@ -104,42 +119,19 @@ void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
     }
 }
 
-void draw_parallel_lines(t_game *game, t_pos start, int count, int spacing, 
-                        int length, int is_vertical, int color)
+int tile_exists(t_game *game, int row, int col)
 {
-    int i = 0;
-    while (i <= count)
-    {
-        int x1, y1, x2, y2;
-        if (is_vertical)
-        {
-            x1 = x2 = start.x + i * spacing;
-            y1 = start.y;
-            y2 = start.y + length;
-        }
-        else
-        {
-            x1 = start.x;
-            x2 = start.x + length;
-            y1 = y2 = start.y + i * spacing;
-        }
-        draw_line(game, x1, y1, x2, y2, color);
-        i++;
-    }
-}
-
-void draw_grid_lines(t_game *game, t_pos offset, int cols, int rows, int tile_size)
-{
-    draw_parallel_lines(game, offset, cols, tile_size, rows * tile_size, 1, 0x222222);
-    draw_parallel_lines(game, offset, rows, tile_size, cols * tile_size, 0, 0x222222);
-}
-
-void draw_grid(t_game *game)
-{
-    t_pos offset = {game->mini_off_x, game->mini_off_y};
-    int cols = game->mini_w / game->m_sq_size;
-    int rows = game->mini_h / game->m_sq_size;
-    draw_grid_lines(game, offset, cols, rows, game->m_sq_size);
+    int rows = map_height(game->core->map);
+    
+    if (row < 0 || row >= rows)
+        return 0;
+    
+    int cols = ft_strlen(game->core->map[row]);
+    if (col < 0 || col >= cols)
+        return 0;
+        
+    char tile = game->core->map[row][col];
+    return (tile != '\n' && tile != '\0');
 }
 
 void draw_rays(t_game *game)
@@ -155,37 +147,12 @@ void draw_rays(t_game *game)
     }
 }
 
-void draw_player_icon(t_game *game, t_pos pos, int size)
-{
-    fill_tile(game, pos, size, 0xFF0000);
-}
-
 t_pos get_player_screen_pos(t_game *game)
 {
     t_pos pos;
     pos.x = game->mini_off_x + (int)(game->px * game->m_sq_size);
     pos.y = game->mini_off_y + (int)(game->py * game->m_sq_size);
     return pos;
-}
-
-void draw_player_direction_arrow(t_game *game, t_pos center)
-{
-    int arrow_length = game->m_sq_size / 2;
-    int arrow_end_x = center.x + (int)(game->dir_x * arrow_length);
-    int arrow_end_y = center.y + (int)(game->dir_y * arrow_length);
-    draw_line(game, center.x, center.y, arrow_end_x, arrow_end_y, 0x0000FF);
-}
-
-void draw_player(t_game *game)
-{
-    int margin = game->m_sq_size / 4;
-    int player_size = game->m_sq_size - (2 * margin);
-    
-    t_pos center = get_player_screen_pos(game);
-    t_pos icon_pos = {center.x - player_size / 2, center.y - player_size / 2};
-    
-    draw_player_icon(game, icon_pos, player_size);
-    draw_player_direction_arrow(game, center);
 }
 
 int minimap(t_game *game)

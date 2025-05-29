@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/27 11:42:53 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:39:40 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void printer(t_data core, int count)
 
 int on_window_close(void *param)
 {
-    t_game *game = (t_game *)param;
-    on_destroy(game);
-    return (0);
+	t_game *game = (t_game *)param;
+	on_destroy(game);
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -49,12 +49,12 @@ int main(int argc, char **argv)
 	t_game 	game;
 
 	ft_bzero(&core, sizeof(core));
+	ft_bzero(&game, sizeof(game));
 	if (argc != 2)
 	{
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
 		return (-1);
 	}
-	//Checks if valid file
 	if (ft_strlen(argv[1]) < 5 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4)	!= 0 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 5, "/.cub", 5) == 0)
 	{
 		write(2, "Error\nNot the correct amount of arguments\n", 43);
@@ -73,26 +73,15 @@ int main(int argc, char **argv)
 	//printer(core, count);
 
 	//Martins part
-    game.px = core.px;
-    game.py = core.py;
-    init(&core, &game);
-    render(&game);
-    
-    mlx_loop_hook(game.mlx_ptr, (void *)render, &game);
-    mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_key_press, &game);
-    mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_window_close, &game);
-    
-    mlx_loop(game.mlx_ptr);
-
-	//Here to free leaks, Leaks my part
-	if (core.map)
-		free_array(core.map);
-	if (core.north)
-		free(core.north);
-	if (core.south)
-		free(core.south);
-	if (core.east)
-		free(core.east);
-	if (core.west)
-		free(core.west);
+	game.px = core.px;
+	game.py = core.py;
+	if (init(&core, &game) == 1)
+		return (on_destroy(&game),1);
+	render(&game);
+	
+	mlx_loop_hook(game.mlx_ptr, (void *)render, &game);
+	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_key_press, &game);
+	mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &on_window_close, &game);
+	
+	mlx_loop(game.mlx_ptr);
 }
