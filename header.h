@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/22 10:52:25 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:49:24 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct s_pos {
+    int x;
+    int y;
+} t_pos;
+
+
+typedef struct s_line {
+    int dx;
+    int dy;
+    int steps;
+    float x_inc;
+    float y_inc;
+    float x;
+    float y;
+} t_line;
 
 typedef struct s_data
 {
@@ -120,9 +136,25 @@ typedef struct s_dda {
     int   step_x,    step_y;
     int   map_x,     map_y;
     double side_x,   side_y;
-    int   side;        // 0 = hit vertical wall, 1 = hit horizontal wall
-    double perp_dist;  // exact distance to the wall
+    int   side;
+    double perp_dist;
 } t_dda;
+
+typedef struct s_raycast_result
+{
+    t_ray ray;
+    t_dda dda;
+    char tile_type;
+    double corrected_dist;
+} t_raycast_result;
+
+typedef struct s_wall_params
+{
+    int start;
+    int end;
+    t_texture *tex;
+    int tex_x;
+} t_wall_params;
 
 /*Parsing && Map Functions*/
 int		getdata(char *file, t_data *core, unsigned int	count);
@@ -149,6 +181,16 @@ void render_3d_projection(t_game *game);
 int map_height(char **map);
 int on_destroy(t_game *game);
 void eval_keycode(int keycode, t_game *game, double *dx, double *dy);
+
+/*Map utils*/
+char get_tile_at_pos(char **map, int x, int y);
+int is_valid_map_pos(char **map, int x, int y);
+int get_map_width(char **map, int y);
+
+/*Move utils*/
+void try_open_door(t_game *game, double x, double y);
+void try_move_axis(t_game *game, double new_pos, double *current_pos, double buffer, int is_x_axis);
+void rotate_player(t_game *game, double delta);
 
 /*Wall,Door*/
 int is_wall(t_game *game, double x, double y);

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-SOURCE = main.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c ft_atoi1.c ray.c 3D.c door_wall.c movement.c minimap.c mlx.c
+SOURCE = main.c map_utils.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c ft_atoi1.c ray.c 3D.c door_wall.c movement.c movement_utils.c minimap.c mlx.c
 
 OBJECTS = $(SOURCE:.c=.o)
 
