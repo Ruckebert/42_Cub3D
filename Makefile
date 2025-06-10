@@ -1,6 +1,6 @@
 NAME = cub3D
 
-SOURCE = minimap2.c minimap3.c draw.c draw_grid.c mlx_init.c main.c map_utils.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c ft_atoi1.c wall_render.c raycast.c ray_utils.c 3D.c door_wall.c movement.c movement_utils.c minimap.c game_init.c mlx_free.c
+SOURCE = draw_grid2.c door_wall2.c minimap2.c minimap3.c ray_utils2.c movement2.c draw.c draw_grid.c mlx_init.c main.c map_utils.c map_checker.c get_next_line.c get_next_line_utils.c parsing.c utils.c mapcreator.c extractor.c ft_atoi1.c wall_render2.c wall_render3.c wall_render.c raycast.c ray_utils.c door_wall.c movement.c movement_utils.c minimap.c game_init.c mlx_free.c
 
 OBJECTS = $(SOURCE:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:00:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 14:52:21 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:33:27 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	render_3d_projection(t_game *game)
 void	cast_ray_dda(t_game *game, double ray_angle)
 {
 	t_raycast_result	r;
+	t_line_points		pts;
 	int					ex;
 	int					ey;
 
@@ -65,8 +66,9 @@ void	cast_ray_dda(t_game *game, double ray_angle)
 			* game->m_sq_size);
 	ey = (int)((game->py + r.ray.dir_y * r.dda.perp_dist)
 			* game->m_sq_size);
-	draw_line(game,
-		(int)(game->px * game->m_sq_size + game->m_sq_size / 2),
-		(int)(game->py * game->m_sq_size + game->m_sq_size / 2),
-		ex, ey, 0x00FF00);
+	pts.x0 = (int)(game->px * game->m_sq_size + game->m_sq_size / 2);
+	pts.y0 = (int)(game->py * game->m_sq_size + game->m_sq_size / 2);
+	pts.x1 = ex;
+	pts.y1 = ey;
+	draw_line(game, pts, 0x00FF00);
 }

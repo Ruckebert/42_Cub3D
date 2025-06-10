@@ -1,64 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   door_wall.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/29 13:52:01 by marsenij          #+#    #+#             */
+/*   Updated: 2025/06/10 16:44:00 by marsenij         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-static int is_orthogonally_adjacent(int px, int py, int x, int y)
+static void	update_door_state(t_game *game, int x, int y)
 {
-	return ((abs(px - x) == 1 && py == y) || (abs(py - y) == 1 && px == x));
+	char	tile;
+	int		is_adjacent;
+	int		player_x;
+	int		player_y;
+
+	player_x = (int)floor(game->px);
+	player_y = (int)floor(game->py);
+	tile = game->core->map[y][x];
+	is_adjacent = is_orthogonally_adjacent(player_x, player_y, x, y);
+	if (tile == '2' && is_adjacent)
+		game->core->map[y][x] = '3';
+	else if (tile == '3' && !is_adjacent)
+		game->core->map[y][x] = '2';
 }
 
-int is_adjacent_to_door(t_game *game)
+static void	process_row(t_game *game, int y)
 {
-	int player_x = (int)floor(game->px);
-	int player_y = (int)floor(game->py);
-	int dx[4] = {0, 1, 0, -1};
-	int dy[4] = {-1, 0, 1, 0};
-	
-	for (int i = 0; i < 4; i++)
+	int	width;
+	int	x;
+
+	if (!game->core->map[y])
+		return ;
+	width = get_map_width(game->core->map, y);
+	x = 0;
+	while (x < width)
 	{
-		int check_x = player_x + dx[i];
-		int check_y = player_y + dy[i];
-		
-		if (get_tile_at_pos(game->core->map, check_x, check_y) == '2')
-			return 1;
+		update_door_state(game, x, y);
+		x++;
 	}
-	return 0;
 }
 
-void update_doors(t_game *game)
+void	update_doors(t_game *game)
 {
-	int player_x = (int)floor(game->px);
-	int player_y = (int)floor(game->py);
-	int height = map_height(game->core->map);
-	
+	int	height;
+	int	y;
+
 	if (!game || !game->core || !game->core->map)
-		return;
-	
-	for (int y = 0; y < height; y++)
+		return ;
+	height = map_height(game->core->map);
+	y = 0;
+	while (y < height)
 	{
-		if (!game->core->map[y])
-			continue;
-			
-		int width = get_map_width(game->core->map, y);
-		for (int x = 0; x < width; x++)
-		{
-			char tile = game->core->map[y][x];
-			int is_adjacent = is_orthogonally_adjacent(player_x, player_y, x, y);
-			
-			if (tile == '2' && is_adjacent)
-				game->core->map[y][x] = '3';
-			else if (tile == '3' && !is_adjacent)
-				game->core->map[y][x] = '2';
-		}
+		process_row(game, y);
+		y++;
 	}
 }
 
-int is_wall(t_game *game, double x, double y)
+int	is_wall(t_game *game, double x, double y)
 {
-	int map_x = (int)floor(x);
-	int map_y = (int)floor(y);
-	
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)floor(x);
+	map_y = (int)floor(y);
 	if (!is_valid_map_pos(game->core->map, map_x, map_y))
-		return 1;
-	
-	char tile = game->core->map[map_y][map_x];
-	return (tile == '1' || tile == '2');
+		return (1);
+	if (game->core->map[map_y][map_x] == '1'
+		|| game->core->map[map_y][map_x] == '2')
+		return (1);
+	return (0);
 }

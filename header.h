@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/29 15:25:28 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:01:03 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,10 +211,20 @@ void	init_minimap(t_data *core, t_game *game);
 void	try_open_door(t_game *game, double x, double y);
 void	try_move_axis(t_game *game, double new_pos, double *current_pos, double buffer, int is_x_axis);
 void	rotate_player(t_game *game, double delta);
+void	try_move_x(t_game *game, double new_x, double buffer);
+void	try_move_y(t_game *game, double new_y, double buffer);
 
 /*Wall,Door*/
 int		is_wall(t_game *game, double x, double y);
 void	update_doors(t_game *game);
+int	is_orthogonally_adjacent(int px, int py, int x, int y);
+int	check_adjacent_tiles(t_game *game, int player_x, int player_y);
+void	draw_horizontal_grid_lines(t_game *game);
+void	compute_wall_dimensions(t_game *game, double corr_dist,	int *start, int *end);
+t_texture	*select_wall_texture(t_game *game, t_ray *ray, t_dda *dda);
+double	get_wall_x(t_game *game, t_ray *ray, t_dda *dda);
+int	get_texture_pixel(t_texture *tex, int x, int y);
+
 
 /* Movement */
 void	move(t_data *core, t_game *game);
