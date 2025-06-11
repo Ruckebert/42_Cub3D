@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:51:53 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/05/22 10:16:04 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/11 09:24:59 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	map_checker_tokens(char **map, t_data *core)
 			else if (map[i][j] == 'W' || map[i][j] == 'N' || map[i][j] == 'S'
 					|| map[i][j] == 'E')
 			{
-				core->px = j; /*Check with Martin if this is correct*/
+				core->px = j;
 				core->py = i;
 				core->direction = map[i][j++];
 				core->error++;
@@ -40,50 +40,6 @@ void	map_checker_tokens(char **map, t_data *core)
 		}
 		i++;
 	}
-}
-
-void	validplayerdata(t_data *core)
-{
-	if (core->direction == '\0')
-		error_exit(core, "Error\nInvalid Player Direction!\n");
-	if (core->error >= 2)
-		error_exit(core, "Error\nToo Many Player Icons!\n");
-}
-
-int	is_walkable(char c)
-{
-	if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_space(char c)
-{
-	if (c == ' ' || c == '\n')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_out_of_bounds(char **map, int i, int j)
-{
-	if (i < 0 || map[i] == NULL || j < 0 || j >= (int)ft_strlen(map[i]))
-		return (1);
-	else
-		return (0);
-}
-
-void	assign_values(int dir[4][2])
-{
-	dir[0][0] = -1;
-	dir[0][1] = 0;
-	dir[1][0] = 1;
-	dir[1][1] = 0;
-	dir[2][0] = 0;
-	dir[2][1] = -1;
-	dir[3][0] = 0;
-	dir[3][1] = 1;
 }
 
 void	check_surroundings(t_data *core, char **map, int i, int j)

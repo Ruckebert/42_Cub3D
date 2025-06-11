@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:51:50 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/10 16:17:42 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:29:16 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,16 @@ void	render(t_game *game)
 int	on_key_press(int keycode, void *param)
 {
 	t_game	*game;
+	double	rot_speed;
 
 	game = (t_game *)param;
+	rot_speed = M_PI / 16;
 	if (keycode == XK_Escape)
 		on_destroy(game);
 	else if (keycode == XK_Left)
-		rotate_player(game, -ROT_SPEED);
+		rotate_player(game, -rot_speed);
 	else if (keycode == XK_Right)
-		rotate_player(game, ROT_SPEED);
+		rotate_player(game, rot_speed);
 	else if (keycode == XK_w || keycode == XK_s
 		|| keycode == XK_a || keycode == XK_d)
 		playermove(keycode, game);

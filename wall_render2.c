@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_render2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:10:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/10 17:01:23 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:33:01 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static int	calculate_slice_height(t_game *game, double corr_dist)
 {
 	double	proj_dist;
 	int		slice_h;
+	double	fov;
 
-	proj_dist = (game->win_x / 2.0) / tan(FOV / 2.0);
+	fov = M_PI / 3;
+	proj_dist = (game->win_x / 2.0) / tan(fov / 2.0);
 	slice_h = (int)(proj_dist / corr_dist);
 	return (slice_h);
 }

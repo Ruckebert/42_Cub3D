@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:15 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 15:19:54 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:32:04 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void	draw_rays(t_game *game)
 	double	angle_step;
 	double	ray_angle;
 	int		i;
+	double	fov;
 
 	i = 0;
-	angle_step = FOV / NUM_RAYS;
-	start_angle = game->angle - (FOV / 2);
+	fov = M_PI / 3;
+	angle_step = fov / NUM_RAYS;
+	start_angle = game->angle - (fov / 2);
 	while (i < NUM_RAYS)
 	{
 		ray_angle = start_angle + i * angle_step;

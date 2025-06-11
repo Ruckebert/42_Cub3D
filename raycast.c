@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:00:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/10 16:33:27 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:32:31 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	render_3d_projection(t_game *game)
 {
 	double	start_ang;
 	double	step;
+	double	fov;
 	int		col;
 
-	start_ang = game->angle - (FOV / 2.0);
-	step = FOV / (double)game->win_x;
+	fov = M_PI / 3;
+	start_ang = game->angle - (fov / 2.0);
+	step = fov / (double)game->win_x;
 	col = 0;
 	while (col < game->win_x)
 	{
