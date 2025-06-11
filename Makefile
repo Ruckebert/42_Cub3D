@@ -1,5 +1,7 @@
 NAME = cub3D
 
+NAME_BONUS = cub3D_bonus
+
 SOURCEPARSING = main.c Parsing/get_next_line.c Parsing/get_next_line_utils.c Parsing/map_checker.c Parsing/map_checker2.c Parsing/map_utils.c Parsing/mapcreator.c Parsing/parsing.c Parsing/utils.c Parsing/utils2.c
 
 SOURCERAYCASTING = ImageRayCasting/door_wall.c ImageRayCasting/door_wall2.c ImageRayCasting/draw.c ImageRayCasting/draw_grid.c ImageRayCasting/draw_grid2.c ImageRayCasting/extractor.c ImageRayCasting/ft_atoi1.c ImageRayCasting/game_init.c ImageRayCasting/minimap.c ImageRayCasting/minimap2.c ImageRayCasting/minimap3.c ImageRayCasting/mlx_free.c ImageRayCasting/mlx_init.c ImageRayCasting/movement.c ImageRayCasting/movement2.c ImageRayCasting/movement_utils.c ImageRayCasting/raycast.c ImageRayCasting/ray_utils.c ImageRayCasting/ray_utils2.c ImageRayCasting/wall_render.c ImageRayCasting/wall_render2.c ImageRayCasting/wall_render3.c
