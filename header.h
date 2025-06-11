@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:13:41 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:22:02 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 #  define BUFFER_SIZE 200000
 
 # endif
-# define M_PI 3.14159265358979323846
 # define HEIGHT 900
 # define WIDTH 1800
 # define NUM_RAYS 100
@@ -71,15 +70,19 @@ typedef struct s_line
 typedef struct s_data
 {
 	char	**map;
+	/* RGB Top&Bottom */
 	int		top;
 	int		bottom;
+	/* Image Files */
 	char	*north;
 	char	*south;
 	char	*east;
 	char	*west;
+	/* Player Position&Direction */
 	int		px;
 	int		py;
 	char	direction;
+	/* Rest */
 	int		error;
 	int		checker;
 	char	dir;
