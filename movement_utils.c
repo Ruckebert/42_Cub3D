@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:01 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 14:40:04 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:25:06 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,4 @@ int	can_move_to(t_game *game, double x, double y, double buffer)
 	if (is_wall(game, x - buffer, y - buffer))
 		return (0);
 	return (1);
-}
-
-void	try_move_x(t_game *game, double new_x, double buffer)
-{
-	double	test_x;
-	double	test_y;
-
-	test_x = new_x;
-	test_y = game->py;
-	if (can_move_to(game, test_x, test_y, buffer))
-		game->px = new_x;
-}
-
-void	try_move_y(t_game *game, double new_y, double buffer)
-{
-	double	test_x;
-	double	test_y;
-
-	test_x = game->px;
-	test_y = new_y;
-	if (can_move_to(game, test_x, test_y, buffer))
-		game->py = new_y;
 }

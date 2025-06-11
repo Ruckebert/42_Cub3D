@@ -6,13 +6,13 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:51:50 by marsenij          #+#    #+#             */
-/*   Updated: 2025/05/29 14:39:48 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:17:42 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static void	recover_from_wall(t_game *game)
+void	recover_from_wall(t_game *game)
 {
 	double	offset;
 	int		i;
@@ -56,8 +56,8 @@ void	playermove(int keycode, t_game *game)
 	new_x = game->px + dx * move_speed;
 	new_y = game->py + dy * move_speed;
 	try_open_door(game, new_x, new_y);
-	try_move_axis(game, new_x, &game->px, 0.1, 1);
-	try_move_axis(game, new_y, &game->py, 0.1, 0);
+	try_move_x(game, new_x, 0.1);
+	try_move_y(game, new_y, 0.1);
 	if (is_wall(game, game->px, game->py))
 		recover_from_wall(game);
 }
@@ -88,19 +88,4 @@ int	on_key_press(int keycode, void *param)
 		|| keycode == XK_a || keycode == XK_d)
 		playermove(keycode, game);
 	return (0);
-}
-void	try_move_axis(t_game *game, double new_pos,
-			double *current_pos, double buffer, int is_x_axis)
-{
-	double	test_x;
-	double	test_y;
-
-	test_x = game->px;
-	test_y = game->py;
-	if (is_x_axis)
-		test_x = new_pos;
-	else
-		test_y = new_pos;
-	if (can_move_to(game, test_x, test_y, buffer))
-		*current_pos = new_pos;
 }
