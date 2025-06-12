@@ -12,17 +12,16 @@
 
 #include "../header.h"
 
-int	compute_texture_x(t_game *game, t_ray *ray, t_dda *dda, t_texture *tex)
-{
-	double	wall_x;
-	int		tex_x;
-
-	wall_x = get_wall_x(game, ray, dda);
-	tex_x = (int)(wall_x * tex->width);
-	if ((dda->side == 0 && ray->dir_x < 0.0)
-		|| (dda->side == 1 && ray->dir_y > 0.0))
-		tex_x = tex->width - tex_x - 1;
-	return (tex_x);
+int compute_texture_x(t_game *game, t_ray *ray, t_dda *dda, t_texture *tex) {
+    double wall_x;
+    int    tex_x;
+    wall_x = get_wall_x(game, ray, dda);
+    // Add aspect ratio correction
+    tex_x = (int)((wall_x * tex->width) / tex->height);
+    if ((dda->side == 0 && ray->dir_x < 0.0) || 
+        (dda->side == 1 && ray->dir_y > 0.0))
+        tex_x = tex->width - tex_x - 1;
+    return tex_x;
 }
 
 int	get_texture_pixel(t_texture *tex, int x, int y)
