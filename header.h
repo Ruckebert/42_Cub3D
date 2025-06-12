@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:22:02 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:22:37 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@ typedef struct s_pos
 	int	x;
 	int	y;
 }	t_pos;
-
-typedef struct s_line_data
-{
-	int	x0;
-	int	y0;
-	int	x1;
-	int	y1;
-	int	color;
-}	t_line_data;
 
 typedef struct s_line_points
 {

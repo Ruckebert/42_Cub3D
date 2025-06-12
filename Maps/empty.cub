@@ -1,7 +1,7 @@
-NO ./Textures/Ndum.txt
-SO ./Textures/Sdum.txt
-WE ./Textures/Wdum.txt
-EA ./Textures/Edum.txt
+NO ./Textures/Thaiman.xpm
+SO ./Textures/Thaiman.xpm
+WE ./Textures/Thaiman.xpm
+EA ./Textures/Thaiman.xpm
 
 F 20,1,1
 C 200,1,1
