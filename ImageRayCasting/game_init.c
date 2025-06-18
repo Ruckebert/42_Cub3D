@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:08 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:06 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:04:57 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	init_minimap(t_data *core, t_game *game)
 	while (core->map[0][cols])
 		cols++;
 	game->m_sq_size = 7;
-	game->mini_w = cols * game->m_sq_size;
-	game->mini_h = rows * game->m_sq_size;
 	game->mini_off_x = 0;
 	game->mini_off_y = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapcreator_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:09:26 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:57:51 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:10:45 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	map_clearer(char **map, int i)
 
 int	get_map_char_first_loop(t_data *vars, char **line, int fd)
 {
-	while (*line[0] != '1' && *line[0] != '0' && *line[0] != ' '&& *line[0] != '2')
+	while (*line[0] != '1' && *line[0] != '0'
+		&& *line[0] != ' ' && *line[0] != '2')
 	{
 		free(*line);
 		*line = get_next_line(fd, vars);

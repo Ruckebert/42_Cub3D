@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/12 13:22:37 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:06:25 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # endif
 # define HEIGHT 900
 # define WIDTH 1800
-# define NUM_RAYS 100
 # define RAY_LENGTH 1000
 # define MAX_DEPTH 1000
 
@@ -112,8 +111,6 @@ typedef struct s_game
 	int			line_len;
 	int			endian;
 	/* minimap geometry, in pixels */
-	int			mini_w;
-	int			mini_h;
 	int			mini_off_x;
 	int			mini_off_y;
 	/* Textures */
@@ -147,7 +144,6 @@ typedef struct s_raycast_result
 {
 	t_ray	ray;
 	t_dda	dda;
-	char	tile_type;
 	double	corrected_dist;
 }	t_raycast_result;
 
@@ -188,7 +184,6 @@ void			draw_player(t_game *game);
 void			draw_minimap(t_game *game);
 void			draw_grid(t_game *game);
 void			draw_line(t_game *game, t_line_points pts, int color);
-void			cast_ray_dda(t_game *game, double ray_angle);
 void			render_3d_projection(t_game *game);
 int				map_height(char **map);
 int				on_destroy(t_game *game);
@@ -213,7 +208,6 @@ void			try_move_y(t_game *game, double new_y, double buffer);
 int				is_wall(t_game *game, double x, double y);
 void			update_doors(t_game *game);
 int				is_orthogonally_adjacent(int px, int py, int x, int y);
-int				check_adjacent_tiles(t_game *game, int player_x, int player_y);
 void			draw_horizontal_grid_lines(t_game *game);
 void			compute_wall_dimensions(t_game *game, double corr_dist,
 					int *start, int *end);
