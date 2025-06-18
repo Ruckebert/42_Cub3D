@@ -4,7 +4,7 @@ WE ./Textures/Cat.xpm
 EA ./Textures/Dog.xpm
 
 F 255,1,0
-C 0,,0
+C 0,1,0
 
 111111
 1 1011

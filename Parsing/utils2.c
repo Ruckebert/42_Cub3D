@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 10:17:37 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 16:21:29 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:27:50 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	rgbloop(char *line, long long i, int *type)
 		if (count > 3)
 			return (free(line), -1);
 	}
-	if (line[i] != ',')
+	if (line[i] != ',' || line[i - 1] == ',')
 		return (free(line), -1);
 	i++;
 	return (i);

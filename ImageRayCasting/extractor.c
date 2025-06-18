@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 13:07:31 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:03:19 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	extracting_link(char **core)
 
 	str = NULL;
 	temp = NULL;
-	str = ft_strchr(*core, ' ');
+	str = *core;
+	str = &str[4];
 	if (str != NULL)
 		str++;
 	temp = ft_strdup(str);
