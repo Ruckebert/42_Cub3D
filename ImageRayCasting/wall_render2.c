@@ -6,10 +6,9 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:10:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 11:57:02 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:11:57 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../header.h"
 
@@ -31,6 +30,7 @@ t_texture	*select_wall_texture(t_game *game, t_ray *ray, t_dda *dda)
 double	get_wall_x(t_game *game, t_ray *ray, t_dda *dda)
 {
 	double	wall_x;
+
 	if (dda->side == 0)
 		wall_x = game->py + dda->perp_dist * ray->dir_y;
 	else

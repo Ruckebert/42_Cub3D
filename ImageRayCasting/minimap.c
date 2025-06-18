@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:15 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 12:01:56 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:12:19 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	tile_exists(t_game *game, int row, int col)
 	return (tile != '\n' && tile != '\0');
 }
 
-
-
 t_pos	get_player_screen_pos(t_game *game)
 {
 	t_pos	pos;
@@ -56,5 +54,3 @@ t_pos	get_player_screen_pos(t_game *game)
 	pos.y = game->mini_off_y + (int)(game->py * game->m_sq_size);
 	return (pos);
 }
-
-
