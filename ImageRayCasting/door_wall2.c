@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:01 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 13:18:58 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:35:41 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	is_orthogonally_adjacent(int px, int py, int x, int y)
 		return (1);
 	return (0);
 }
+
 void	load_texture_data(t_game *game)
 {
 	game->tex_north.data = mlx_get_data_addr(game->tex_north.img,

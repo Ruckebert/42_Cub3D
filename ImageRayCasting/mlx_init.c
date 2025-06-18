@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:08 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 13:17:53 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:35:50 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	load_textures(t_data *core, t_game *game)
 		return (1);
 	return (0);
 }
-
 
 int	init(t_data *core, t_game *game)
 {
