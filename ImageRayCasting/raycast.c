@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:00:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:29 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:05:47 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static t_raycast_result	cast_single_ray(t_game *game, double ray_angle)
 	r.ray = init_ray_values(ray_angle);
 	r.dda = init_step_and_sidedist(r.ray, game->px, game->py);
 	perform_dda(game, r.ray, &r.dda);
-	r.tile_type = get_tile_at_pos(game->core->map,
-			r.dda.map_x, r.dda.map_y);
 	r.corrected_dist = correct_fisheye(ray_angle,
 			game->angle, r.dda.perp_dist);
 	return (r);

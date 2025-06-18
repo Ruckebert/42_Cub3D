@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   wall_render2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:10:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:32 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:57:02 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
 
 #include "../header.h"
 

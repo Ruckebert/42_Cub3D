@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:15 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:09 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:01:56 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,7 @@ int	tile_exists(t_game *game, int row, int col)
 	return (tile != '\n' && tile != '\0');
 }
 
-void	draw_rays(t_game *game)
-{
-	double	start_angle;
-	double	angle_step;
-	double	ray_angle;
-	int		i;
-	double	fov;
 
-	i = 0;
-	fov = M_PI / 3;
-	angle_step = fov / NUM_RAYS;
-	start_angle = game->angle - (fov / 2);
-	while (i < NUM_RAYS)
-	{
-		ray_angle = start_angle + i * angle_step;
-		cast_ray_dda(game, ray_angle);
-		i++;
-	}
-}
 
 t_pos	get_player_screen_pos(t_game *game)
 {
@@ -75,11 +57,4 @@ t_pos	get_player_screen_pos(t_game *game)
 	return (pos);
 }
 
-int	minimap(t_game *game)
-{
-	draw_minimap(game);
-	draw_grid(game);
-	draw_player(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
-	return (0);
-}
+
