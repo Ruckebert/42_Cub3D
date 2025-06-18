@@ -52,15 +52,16 @@ t_dda	init_step_and_sidedist(t_ray ray, double px, double py)
 	return (dda);
 }
 
-double	correct_fisheye(double ray_angle, double player_angle,
-			double perp_dist)
+double correct_fisheye(double ray_angle, double player_angle, double perp_dist)
 {
-	double	angle_diff;
-
-	angle_diff = ray_angle - player_angle;
-	while (angle_diff > M_PI)
-		angle_diff -= 2 * M_PI;
-	while (angle_diff < -M_PI)
-		angle_diff += 2 * M_PI;
-	return (perp_dist * cos(angle_diff));
+    double angle_diff = ray_angle - player_angle;
+    // Ensure angle difference is within valid range
+    while (angle_diff > M_PI) angle_diff -= 2 * M_PI;
+    while (angle_diff < -M_PI) angle_diff += 2 * M_PI;
+    
+    // Prevent division by very small distances
+    if (perp_dist < 0.1)  // Directly using 0.1 instead of MIN_DISTANCE
+        perp_dist = 0.1;
+        
+    return perp_dist * cos(angle_diff);
 }

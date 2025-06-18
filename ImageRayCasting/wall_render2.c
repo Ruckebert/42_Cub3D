@@ -12,16 +12,18 @@
 
 #include "../header.h"
 
-static int	calculate_slice_height(t_game *game, double corr_dist)
+static int calculate_slice_height(t_game *game, double corr_dist)
 {
-	double	proj_dist;
-	int		slice_h;
-	double	fov;
-
-	fov = M_PI / 3;
-	proj_dist = (game->win_x / 2.0) / tan(fov / 2.0);
-	slice_h = (int)(proj_dist / corr_dist);
-	return (slice_h);
+    double proj_dist = (game->win_x / 2.0) / tan(FOV_ANGLE / 2.0);
+    int slice_h = (int)(proj_dist / corr_dist);
+    
+    // Clamp the slice height to prevent excessive scaling
+    if (slice_h > game->win_y)
+        slice_h = game->win_y;
+    if (slice_h < MIN_SLICE_HEIGHT)
+        slice_h = MIN_SLICE_HEIGHT;
+        
+    return slice_h;
 }
 
 static void	set_bounds(int *start, int *end, int slice_h, t_game *game)
