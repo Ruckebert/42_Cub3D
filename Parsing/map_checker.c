@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:51:53 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:37 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:14:42 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	map_checker_topbottom(char **map, t_data *core)
 void	map_checker(t_data *core)
 {
 	if (core->top == 0 || core->bottom == 0)
-		exit(write(1, "Error\nNo Top or Bottom\n", 23));
+		error_exit(core, "Error\nNo Top or Bottom\n");
 	map_checker_tokens(core->map, core);
 	validplayerdata(core);
 	map_checker_topbottom(core->map, core);
