@@ -14,14 +14,14 @@
 
 static int calculate_slice_height(t_game *game, double corr_dist)
 {
-    double proj_dist = (game->win_x / 2.0) / tan(FOV_ANGLE / 2.0);
+    double proj_dist = (game->win_x / 2.0) / tan(M_PI / 3.0 / 2.0);
     int slice_h = (int)(proj_dist / corr_dist);
     
     // Clamp the slice height to prevent excessive scaling
     if (slice_h > game->win_y)
         slice_h = game->win_y;
-    if (slice_h < MIN_SLICE_HEIGHT)
-        slice_h = MIN_SLICE_HEIGHT;
+    if (slice_h < 1)  // Minimum slice height
+        slice_h = 1;
         
     return slice_h;
 }

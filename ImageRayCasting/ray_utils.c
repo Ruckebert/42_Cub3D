@@ -60,7 +60,7 @@ double correct_fisheye(double ray_angle, double player_angle, double perp_dist)
     while (angle_diff < -M_PI) angle_diff += 2 * M_PI;
     
     // Prevent division by very small distances
-    if (perp_dist < 0.1)  // Directly using 0.1 instead of MIN_DISTANCE
+    if (perp_dist < 0.1)  // Minimum distance to prevent stretching
         perp_dist = 0.1;
         
     return perp_dist * cos(angle_diff);
