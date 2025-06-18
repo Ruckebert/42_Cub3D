@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 13:50:27 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:18:38 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void			eval_keycode(int keycode, t_game *game, double *dx, double *dy);
 int				tile_exists(t_game *game, int row, int col);
 void			fill_tile(t_game *game, t_pos base, int tile_size, int color);
 t_pos			get_player_screen_pos(t_game *game);
+void			load_texture_data(t_game *game);
 
 /*Map utils*/
 char			get_tile_at_pos(char **map, int x, int y);
