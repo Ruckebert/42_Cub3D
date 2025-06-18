@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:02 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:07:31 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	valid_file_checker(char *str, t_data *core)
 	fd = 0;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
+		error_exit(core, "Error\nInvalid Texture Files!\n");
+	if (ft_strncmp(str + ft_strlen(str) - 4, ".xpm", 4) != 0)
 		error_exit(core, "Error\nInvalid Texture Files!\n");
 	close(fd);
 }
