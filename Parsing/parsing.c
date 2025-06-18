@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 14:36:07 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:43:41 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,39 @@ int	rgbcreator(int *type, char *line, long long i)
 	return (0);
 }
 
+void extractc(t_data *core, char *line, int fd)
+{
+	if (ft_strncmp(line, "C", 1) == 0)
+	{
+		core->dubbot++;
+		if (rgbcreator(&core->bottom, line, 1) == 1 || core->dubbot > 1)
+		{
+			if (core->dubbot > 1)
+				free(line);
+			close(fd);
+			get_next_line(-1, NULL);
+			error_exit(core, "Error\nRGB Incorrect Format2!\n");
+		}
+	}
+}
+
 int	extractf_c(t_data *core, char *line, int count, int fd)
 {
-	if (ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
+	if ((ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0))
 	{
 		if (ft_strncmp(line, "F", 1) == 0)
 		{
-			if (rgbcreator(&core->top, line, 1) == 1)
+			core->dubtop++;
+			if (rgbcreator(&core->top, line, 1) == 1 || core->dubtop > 1)
 			{
+				if (core->dubtop > 1)
+					free(line);
 				close(fd);
 				get_next_line(-1, NULL);
-				error_exit(core, "Error\nRGB Incorrect Format!\n");
+				error_exit(core, "Error\nRGB Incorrect Format1!\n");
 			}
 		}
-		if (ft_strncmp(line, "C", 1) == 0)
-		{
-			if (rgbcreator(&core->bottom, line, 1) == 1)
-			{
-				close(fd);
-				get_next_line(-1, NULL);
-				error_exit(core, "Error\nRGB Incorrect Format!\n");
-			}
-		}
+		extractc(core, line, fd);
 		count--;
 	}
 	return (count);
@@ -69,25 +80,29 @@ int	extractf_c(t_data *core, char *line, int count, int fd)
 
 void	textures(t_data *core, char *line)
 {
-	if (ft_strncmp(line, "NO", 2) == 0 && !core->north)
+	if (ft_strncmp(line, "NO", 2) == 0)
 	{
 		core->checker++;
-		core->north = ft_strdup(line);
+		if (!core->north)
+			core->north = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "SO", 2) == 0 && !core->south)
+	if (ft_strncmp(line, "SO", 2) == 0)
 	{
 		core->checker += 2;
-		core->south = ft_strdup(line);
+		if (!core->south)
+			core->south = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "WE", 2) == 0 && !core->west)
+	if (ft_strncmp(line, "WE", 2) == 0)
 	{
 		core->checker += 4;
-		core->west = ft_strdup(line);
+		if (!core->west)
+			core->west = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "EA", 2) == 0 && !core->east)
+	if (ft_strncmp(line, "EA", 2) == 0)
 	{
 		core->checker += 8;
-		core->east = ft_strdup(line);
+		if (!core->east)
+			core->east = ft_strdup(line);
 	}
 }
 

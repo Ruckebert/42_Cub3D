@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 14:39:33 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:29:36 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_data
 	/* RGB Top&Bottom */
 	int		top;
 	int		bottom;
+	int		dubtop;
+	int		dubbot;
 	/* Image Files */
 	char	*north;
 	char	*south;
