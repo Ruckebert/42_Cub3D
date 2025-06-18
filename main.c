@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:05:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 10:13:44 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:47:47 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ int	main(int argc, char **argv)
 	}
 	count = getdata(argv[1], &core, 0);
 	if (count <= -1)
-	{
-		write(2, "Error\nGet Data Error!\n", 23);
-		return (-1);
-	}
+		error_exit(&core, "Error\nGet Data Error\n");
 	core_image(core, game, count, argv);
 }
