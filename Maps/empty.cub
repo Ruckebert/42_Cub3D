@@ -3,8 +3,8 @@ SO ./Textures/Racoon.xpm
 WE ./Textures/Cat.xpm
 EA ./Textures/Dog.xpm
 
-F 20,1,1
-C 200,1,1
+F 255,255,255
+C 0,0,110
 
 111111
 1 1011
