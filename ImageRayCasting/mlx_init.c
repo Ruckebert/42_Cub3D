@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:08 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:39:15 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:02:48 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,35 @@ static int	init_window(t_game *game)
 	return (0);
 }
 
-static int	load_textures(t_data *core, t_game *game)
+static int	load_and_validate_texture(t_game *game, char *path, t_texture *tex)
 {
 	int	w;
 	int	h;
 
-	game->tex_north.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			core->north, &w, &h);
-	game->tex_south.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			core->south, &w, &h);
-	game->tex_east.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			core->east, &w, &h);
-	game->tex_west.img = mlx_xpm_file_to_image(game->mlx_ptr,
-			core->west, &w, &h);
-	if (!game->tex_west.img || !game->tex_east.img
-		|| !game->tex_south.img || !game->tex_north.img)
+	tex->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &w, &h);
+	if (!tex->img)
 		return (1);
-	game->tex_north.width = w;
-	game->tex_north.height = h;
-	game->tex_south.width = w;
-	game->tex_south.height = h;
-	game->tex_east.width = w;
-	game->tex_east.height = h;
-	game->tex_west.width = w;
-	game->tex_west.height = h;
+	if (w != 512 || h != 512)
+	{
+		mlx_destroy_image(game->mlx_ptr, tex->img);
+		tex->img = NULL;
+		return (1);
+	}
+	tex->width = w;
+	tex->height = h;
+	return (0);
+}
+
+static int	load_textures(t_data *core, t_game *game)
+{
+	if (load_and_validate_texture(game, core->north, &game->tex_north))
+		return (1);
+	if (load_and_validate_texture(game, core->south, &game->tex_south))
+		return (1);
+	if (load_and_validate_texture(game, core->east, &game->tex_east))
+		return (1);
+	if (load_and_validate_texture(game, core->west, &game->tex_west))
+		return (1);
 	return (0);
 }
 
@@ -95,7 +100,10 @@ int	init(t_data *core, t_game *game)
 	if (init_window(game))
 		return (1);
 	if (load_textures(core, game))
-		return (1);
+	{
+		ft_putstr_fd("Error\nTexture must be a 512x512 XPM file.\n", 2);
+		on_destroy(game);
+	}
 	load_texture_data(game);
 	init_minimap(core, game);
 	return (0);
