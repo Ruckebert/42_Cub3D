@@ -6,13 +6,13 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:52 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:58:05 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
 
-int	rgbcreator(int *type, char *line, int i)
+int	rgbcreator(int *type, char *line, long long i)
 {
 	int	red;
 	int	green;

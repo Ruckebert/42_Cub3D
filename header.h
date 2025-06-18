@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
 /*   Updated: 2025/06/18 13:18:38 by marsenij         ###   ########.fr       */
@@ -167,8 +167,8 @@ int				is_walkable(char c);
 int				is_space(char c);
 int				is_out_of_bounds(char **map, int i, int j);
 void			assign_values(int dir[4][2]);
-int				rgbloop(char *line, int i, int *type);
-int				rgbfirst(char *line, int i);
+int				rgbloop(char *line, long long i, int *type);
+int				rgbfirst(char *line, long long i);
 
 /* Get_Next_Line */
 char			*get_next_line(int fd, t_data *vars);
