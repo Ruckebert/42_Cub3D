@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:10:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 12:12:03 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:19:46 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	draw_ceiling(t_game *game, int col, int start)
 	y = 0;
 	while (y < start)
 	{
-		my_mlx_pixel_put(game, col, y, game->core->top);
+		my_mlx_pixel_put(game, col, y, game->core->bottom);
 		y++;
 	}
 }

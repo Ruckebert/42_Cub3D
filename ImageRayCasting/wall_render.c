@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:10:00 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/11 11:37:30 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:19:51 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_floor(t_game *game, int col, int end)
 	y = end + 1;
 	while (y < game->win_y)
 	{
-		my_mlx_pixel_put(game, col, y, game->core->bottom);
+		my_mlx_pixel_put(game, col, y, game->core->top);
 		y++;
 	}
 }
