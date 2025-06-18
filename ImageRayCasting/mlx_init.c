@@ -6,7 +6,7 @@
 /*   By: marsenij <marsenij@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:52:08 by marsenij          #+#    #+#             */
-/*   Updated: 2025/06/18 13:35:50 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:41:45 by marsenij         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	init_dir(t_data *core, t_game *game)
 {
-	if (core->dir == 'E')
+	if (core->direction == 'E')
 		game->angle = 0.0;
-	else if (core->dir == 'S')
+	else if (core->direction == 'S')
 		game->angle = M_PI / 2;
-	else if (core->dir == 'W')
+	else if (core->direction == 'W')
 		game->angle = M_PI;
-	else if (core->dir == 'N')
+	else if (core->direction == 'N')
 		game->angle = 3 * M_PI / 2;
 	game->dir_x = cos(game->angle);
 	game->dir_y = sin(game->angle);
