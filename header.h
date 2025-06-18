@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 08:57:24 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 13:18:38 by marsenij         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:39:33 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_data
 	/* Rest */
 	int		error;
 	int		checker;
-	char	dir;
 }	t_data;
 
 typedef struct s_texture

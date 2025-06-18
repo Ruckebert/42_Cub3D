@@ -1,13 +1,13 @@
 NO ./Textures/Monkey.xpm
 SO ./Textures/Racoon.xpm
-WE ./Textures/Cat.xpm
+NO ./Textures/Monkey.xpm
 EA ./Textures/Dog.xpm
 
-F 255,255,255
-C 0,0,110
+F 255,0,0
+C 0,0,0
 
 111111
 1 1011
 111011
-10N001
+10W001
 111111

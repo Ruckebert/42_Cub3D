@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 13:58:05 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:36:07 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ int	extractf_c(t_data *core, char *line, int count, int fd)
 
 void	textures(t_data *core, char *line)
 {
-	if (ft_strncmp(line, "NO", 2) == 0)
+	if (ft_strncmp(line, "NO", 2) == 0 && !core->north)
 	{
 		core->checker++;
 		core->north = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "SO", 2) == 0)
+	if (ft_strncmp(line, "SO", 2) == 0 && !core->south)
 	{
 		core->checker += 2;
 		core->south = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "WE", 2) == 0)
+	if (ft_strncmp(line, "WE", 2) == 0 && !core->west)
 	{
 		core->checker += 4;
 		core->west = ft_strdup(line);
 	}
-	if (ft_strncmp(line, "EA", 2) == 0)
+	if (ft_strncmp(line, "EA", 2) == 0 && !core->east)
 	{
 		core->checker += 8;
 		core->east = ft_strdup(line);
