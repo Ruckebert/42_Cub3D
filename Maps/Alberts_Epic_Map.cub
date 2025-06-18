@@ -1,7 +1,7 @@
-NO ./Textures/GermanMan.xpm
-SO ./Textures/Oldman.xpm
-WE ./Textures/Thaiman.xpm
-EA ./Textures/Russian.xpm
+NO ./Textures/North.xpm
+SO ./Textures/South.xpm
+WE ./Textures/West.xpm
+EA ./Textures/East.xpm
 
 F 20,1,1
 C 200,1,1

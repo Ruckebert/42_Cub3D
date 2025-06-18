@@ -1,7 +1,7 @@
-NO ./Textures/Russian.xpm
-SO ./Textures/Russian.xpm
-WE ./Textures/Russian.xpm
-EA ./Textures/Russian.xpm
+NO ./Textures/Monkey.xpm
+SO ./Textures/Racoon.xpm
+WE ./Textures/Cat.xpm
+EA ./Textures/Dog.xpm
 
 F 200,255,10
 C 225,30,0
