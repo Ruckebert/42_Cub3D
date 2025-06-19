@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:12:04 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 15:43:41 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:30:23 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	rgbcreator(int *type, char *line, long long i)
 	return (0);
 }
 
-void extractc(t_data *core, char *line, int fd)
+void	extractc(t_data *core, char *line, int fd)
 {
 	if (ft_strncmp(line, "C", 1) == 0)
 	{

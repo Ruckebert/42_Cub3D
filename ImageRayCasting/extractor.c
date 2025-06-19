@@ -6,7 +6,7 @@
 /*   By: aruckenb <aruckenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:07:45 by aruckenb          #+#    #+#             */
-/*   Updated: 2025/06/18 17:03:19 by aruckenb         ###   ########.fr       */
+/*   Updated: 2025/06/19 09:29:12 by aruckenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,22 @@ void	extracting_link(char **core)
 {
 	char	*str;
 	char	*temp;
+	int		i;
 
+	i = 0;
 	str = NULL;
 	temp = NULL;
 	str = *core;
-	str = &str[4];
-	if (str != NULL)
-		str++;
+	while (str[i] != ' ' && str[i] != '\0')
+		i++;
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
+		i -= 2;
+	str = &str[i];
 	temp = ft_strdup(str);
 	free(*core);
-	*core = ft_strdup(temp);
-	free(temp);
+	*core = temp;
 }
 
 void	valid_file_checker(char *str, t_data *core)

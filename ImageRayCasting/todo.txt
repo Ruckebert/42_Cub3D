@@ -1,6 +1,0 @@
-me:
-moving stops when you switch from one key to the other
-you:
-middle number from RGB can be gone and it still works
-NO./validtexture segfaults
-multiple spaces after NO etc does not work

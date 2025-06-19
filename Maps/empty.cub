@@ -1,7 +1,7 @@
 NO ./Textures/Monkey.xpm
 SO ./Textures/Racoon.xpm
-WE ./Textures/Cat.xpm
-EA ./Textures/Dog.xpm
+NO ./Textures/Monkey.xpm
+NO ./Textures/Monkey.xpm
 
 F 255,1,0
 C 0,1,0
